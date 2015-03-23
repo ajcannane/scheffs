@@ -27,7 +27,7 @@
        <td width="261"><p><strong>Scheff's Kitchens &amp; Cabinets</strong><br />
   93 Tapley's Hill Road, <br />
 Hendon SA 5014 </p>
-         <p> <strong>Phone</strong> - (08) 8347 1426<br />
+         <p> <strong>Phone</strong> - (08) 8445 6234<br />
            <strong>Mobile</strong> -
 0418 991 079           <br />
            <strong>Fax</strong> -
@@ -117,7 +117,7 @@ Hendon SA 5014 </p>
         <tr>
           <td valign="top"><img src="images/layout/phone.png" alt="" width="30" height="30" /></td>
           <td><strong>Phone</strong><br /> 
-            (08) 8347 1426
+            (08) 8445 6234
 </td>
         </tr>
         <tr>
