@@ -27,11 +27,11 @@
        <td width="261"><p><strong>Scheff's Kitchens &amp; Cabinets</strong><br />
   93 Tapley's Hill Road, <br />
 Hendon SA 5014 </p>
-         <p> <strong>Phone</strong> - (08) 8445 6234<br />
+         <p> <strong>Phone</strong> - (08) 8347 1426<br />
            <strong>Mobile</strong> -
 0418 991 079           <br />
            <strong>Fax</strong> -
-(08) 8445 6234<br />
+(08) 8347 1426<br />
   <strong>Email</strong> - <a href="mailto:scheffs@bigpond.com">scheffs@bigpond.com </a></p></td>
        <td width="389"><br><iframe width="375" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com.au/maps?q=93+Tapley's+Hill+Road,+Hendon+SA+5014&amp;ie=UTF8&amp;hl=en&amp;hq=&amp;hnear=93+Tapleys+Hill+Rd,+Hendon+South+Australia+5014&amp;ll=-34.87463,138.512664&amp;spn=0.007042,0.01605&amp;z=15&amp;iwloc=A&amp;output=embed"></iframe><br /><small><a href="http://maps.google.com.au/maps?q=93+Tapley's+Hill+Road,+Hendon+SA+5014&amp;ie=UTF8&amp;hl=en&amp;hq=&amp;hnear=93+Tapleys+Hill+Rd,+Hendon+South+Australia+5014&amp;ll=-34.87463,138.512664&amp;spn=0.007042,0.01605&amp;z=15&amp;iwloc=A&amp;source=embed" >View Larger Map</a></small></td>
      </tr>
@@ -117,7 +117,7 @@ Hendon SA 5014 </p>
         <tr>
           <td valign="top"><img src="images/layout/phone.png" alt="" width="30" height="30" /></td>
           <td><strong>Phone</strong><br /> 
-            (08) 8445 6234
+            (08) 8347 1426
 </td>
         </tr>
         <tr>
@@ -134,7 +134,7 @@ Hendon SA 5014 </p>
         <tr>
           <td valign="top"><img src="images/layout/fax.png" width="30" height="30" /></td>
           <td><strong>Fax</strong><br />
-(08) 8445 6234</td>
+(08) 8347 1426</td>
         </tr>
         <tr>
           <td colspan="2" valign="top"><img src="images/layout/hr.gif" width="222" height="1" /></td>
