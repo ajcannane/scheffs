@@ -1,0 +1,138 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {background:#5b5555;
+font-family:Arial, Helvetica, Verdana, sans-serif; 
+font-size: 14px; 
+line-height:22px;
+color:#666; 
+margin: 0px;}
+
+p.center {text-align: center;}
+
+#content a:visited {text-decoration:none;  color:#cc0c01}
+#content a:link {text-decoration:none;  color:#cc0c01}
+#content a:hover {text-decoration: underline; color:#cc0c01}
+
+.clear {clear: both;}
+ul {background-repeat:no-repeat; margin-left:25px; padding:3px; list-style:square }
+#wrapper {
+	width: 100%; background: url(images/bg_top.jpg) repeat-x center top;
+}
+
+
+#container {
+	width: 955px;
+	text-align: left;
+	z-index: 1;
+	margin-top: 0px;
+	margin-right: auto;
+	padding-bottom: 0px;
+	margin-left: auto;
+	background:#fff;
+
+}
+
+
+#menu {
+	width: 955px;
+	height: 45px;
+	margin-top: 0;
+	padding-left: 0px;
+	background:url(images/layout/menu.gif); background-repeat:no-repeat;
+	clear:both;
+}
+
+
+#menu a:visited,
+#menu a:link {text-decoration: none; font-weight: 400;  float: left; padding: 0 30px; line-height: 45px; text-transform: none; font-size: 14px; color:#FFF;  display:block ; text-align:center;float:left}
+#menu a:hover {color:#ffff33;}
+#menu a#active{ color:#ffff33;line-height: 45px;}
+#menu a {background-image:url(images/layout/line.gif); background-repeat:no-repeat ;background-position:right;}
+
+
+#logo { height:126px;width:955px;  background:#000 }
+#banner { height:270px;width:955px; float:left; background:#bc0a03 }
+#content {
+    float:left;
+	margin-top: 0px;
+	margin-right:0px;
+	width:669px;
+	padding-top: 20px;
+	padding-right: 15px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	border-right:1px dotted #ccc;
+	/*min-height:350px;
+	background:url(images/layout/cont-bg.jpg);
+	border-left:1px solid #101215;
+	
+	text-align:justify;*/
+	
+}
+
+#content  a:hover img{
+filter: alpha(opacity=80);
+opacity: .8;		
+}
+
+#rightcol { width:235px; float:right;  padding:5px;  background-image:url(images/layout/side.gif); background-repeat:no-repeat; color:#666; line-height:16px}
+#rightcol a:link {text-decoration:none;  color:#cc0c01}
+#rightcol a:visited {text-decoration:none;  color:#cc0c01}
+#rightcol a:hover {text-decoration: underline; color:#cc0c01}
+.linebreak { border-top:1px dotted #ccc; padding:5px}
+
+
+h1 {font-size: 22px; margin: 0; padding: 5px 0 5px 0; color:#666; border-bottom:1px solid #666}
+h2 {font-size: 16px; margin: 0; padding: 5px 0 5px 0;color: #E4F100; font-weight:400}
+h3 {color: #666666;}
+h5{font-family: Arial, Helvetica, sans-serif; color: #00A0DC; font-size:36px; margin-left:10px}
+
+#footer {
+	width: 955px;
+	height: 103px;
+	margin-top: 0;
+	margin-right: auto;
+	margin-bottom: 0px;
+	margin-left: auto;
+	background-image:url(images/layout/footer.gif); background-repeat:no-repeat;
+}
+
+.copytext {
+   text-align:center; font-size:12px; color:#fff; margin-right:0px; padding-top:25px;
+   }
+   
+#footer a:link {text-decoration: none; color:#ffff33}
+#footer a:visited{text-decoration: none; color:#ffff33}
+#footer a:hover {text-decoration: underline;}   
+
+
+.photos { margin:7px; border:1px solid #ccc; }
+.gallery { margin:7px}
+
+form input {border: 1px solid #ccc; padding: 2px; margin-bottom: 2px; background:#FFF;}
+form select {border: 1px solid #ccc; padding: 2px; margin-bottom: 2px; background:#FFF;}
+form textarea {margin-left: 0px; font: inherit; height: 60px; background:#FFF; }
+form button {padding:5px; border: 1px solid #ccc; width: 100px}
+
+table.form {width:100%; margin: 0px 0;}
+table td {padding: 3px; vertical-align: top;}
+table.form td { border-top:1px dotted #ccc;}
+table.form td header {background:#E5E5E5}
+
+.smaller {
+	font-size: 12px;  color:#fff;
+	}
+	
+td {vertical-align: top;}
+.redtext{ color:#cc0c01; font-size:20px; text-align:center; font-weight:400; font-family:"Century Gothic",arial, "Times New Roman", Times, serif; line-height:26px; }
+.titletext{ color:#cc0c01; font-weight:600; font-size:18px; padding-bottom:3px; border-bottom:1px solid #cc0c01; width:40%}
+.frontext{ color:#cc0c01; font-weight:600; font-size:18px; padding-bottom:3px; border-bottom:1px solid #cc0c01; text-align:center}
+
+
+#divider { margin:5px; padding:5px; width:650px; border-bottom:1px dotted #ccc; font-size:12px; text-align:right}
+
+.prices tr td {border-bottom: 1px solid #ccc; padding: 0px; text-align:center; font-size:12px}
+.prices tr:hover td {background: #fff;}
+.prices th {background: #eee; border-bottom: 1px solid #ccc; padding: 5px;}
+.line { border-bottom:1px dotted #ccc}
