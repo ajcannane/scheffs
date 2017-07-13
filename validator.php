@@ -8,7 +8,7 @@ $warn_body = "";
    global $isspam, $formname, $report_to, $warn_body, $warn_header;
 
    # mail adress(ess) for reports...
-   $report_to = "8464@bakasit.com.au";
+   $report_to = "ajcannane+scheffspam@gmail.com";
    # array holding strings to check, we do not trust these strings in $_POST
    $suspicious_str = array
    (
@@ -28,8 +28,8 @@ $warn_body = "";
            # if we found some suspicios string, then we add our string, so it
            # will be messed a little bit. :)
            $suspect_found = true;
-       //$value = str_ireplace($suspect, "(anti-spam-".$suspect.")", $value); // Use this, if you use PHP5
-       $value = preg_replace('/'.preg_quote($suspect,'/').'/i', "(anti-spam-".$suspect.")", $value); // Use this, if you use PHP < 5
+       $value = str_ireplace($suspect, "(anti-spam-".$suspect.")", $value); // Use this, if you use PHP5
+       //$value = preg_replace('/'.preg_quote($suspect,'/').'/i', "(anti-spam-".$suspect.")", $value); // Use this, if you use PHP < 5
            //$value = eregi_replace($suspect, "(anti-spam-".$suspect.")", $value);
        }
    }
