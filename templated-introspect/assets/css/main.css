@@ -3687,6 +3687,86 @@ body.is-loading #banner:after {
 	}
 }
 
+#four {
+	padding: 4em 0 2em 0;
+	background: #f3f3f3;
+	background: -moz-linear-gradient(left, #f3f3f3 0%, #f3f3f3 50%, #f7f7f7 0%, #f7f7f7 100%);
+	background: -webkit-linear-gradient(left, #f3f3f3 0%, #f3f3f3 50%, #f7f7f7 0%, #f7f7f7 100%);
+	background: linear-gradient(to right, #f3f3f3 0%, #f3f3f3 50%, #f7f7f7 0%, #f7f7f7 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', endColorstr='#f7f7f7', GradientType=1);
+}
+
+#four .inner {
+	display: -ms-flexbox;
+	display: -moz-flex;
+	display: -webkit-flex;
+	display: -ms-flex;
+	display: flex;
+	-moz-flex-direction: row;
+	-webkit-flex-direction: row;
+	-ms-flex-direction: row;
+	flex-direction: row;
+}
+
+#four .inner article {
+	width: 50%;
+}
+
+#four .inner article iframe {
+	width: 500px;
+}
+
+#four .inner article:first-child {
+	padding-right: 6em;
+}
+
+#four .inner article:last-child {
+	padding-left: 6em;
+}
+
+@media screen and (max-width: 1280px) {
+	#four .inner article iframe {
+		width: 360px;
+	}
+}
+
+@media screen and (max-width: 980px) {
+	#four {
+		padding: 2em 0 1em 0;
+		background: -moz-linear-gradient(top, #f3f3f3 0%, #f3f3f3 50%, #f7f7f7 0%, #f7f7f7 100%);
+		background: -webkit-linear-gradient(top, #f3f3f3 0%, #f3f3f3 50%, #f7f7f7 0%, #f7f7f7 100%);
+		background: linear-gradient(to bottom, #f3f3f3 0%, #f3f3f3 50%, #f7f7f7 0%, #f7f7f7 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', endColorstr='#f7f7f7', GradientType=0);
+	}
+	#four .inner {
+		-moz-flex-direction: column;
+		-webkit-flex-direction: column;
+		-ms-flex-direction: column;
+		flex-direction: column;
+	}
+	#four .inner article {
+		width: 100%;
+		min-width: 358px;
+		max-width: 420px;
+	}
+	#four .inner article iframe {
+		width: 420px;
+	}
+	#four .inner article:first-child {
+		padding-right: 0;
+		padding-bottom: 1em;
+	}
+	#four .inner article:last-child {
+		padding-left: 0;
+		padding-top: 1em;
+	}
+}
+
+@media screen and (max-width: 736px) {
+	#four {
+		padding: 2em 0 0.1em 0;
+	}
+}
 
 /* Footer */
 
@@ -3941,4 +4021,30 @@ div.gal {
 
 		figcaption {
 			display: none;
+		}
+
+		figure.nothumb {
+			display: none;
+		}
+
+		.smallthumb {
+			display: block;
+			margin: 0 0 2em 0;
+			width: 100%;
+		}
+
+		.medthumb {
+			display: none !important;
+			margin: 0 0 2em 0;
+			width: 100%;
+		}
+
+		.fa {
+			width: 24px;
+		}
+		.fa-envelope,
+		.fa-phone,
+		.fa-mobile {
+			font-size: 24px;
+			line-height: inherit;
 		}
