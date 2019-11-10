@@ -5,8 +5,8 @@
 require_once __DIR__ . '/./vendor/autoload.php';
 
 // Register API keys at https://www.google.com/recaptcha/admin
-$siteKey = '6Lc5Jw0UAAAAAETBRcbNldJHFFbsxKN-ZzaN1wiG';
-$secret = '6Lc5Jw0UAAAAAKUkceAYCZoaH5Ysd7cxI2GbPoyr';
+$siteKey = '6Lf4RkAUAAAAAEZR8lt6JeG3HVPTgoPzaTC37Jo5';
+$secret = '6Lf4RkAUAAAAAEddKKviiUVsYngOF-l-nLxum_7m';
 $enquiryTo = 'ajcannane@gmail.com';
 
 // reCAPTCHA supported 40+ languages listed here: https://developers.google.com/recaptcha/docs/language
@@ -135,7 +135,7 @@ $lang = 'en';
     <label>Enquiry</label>
       <textarea name="enquiry" id="textarea2" cols="45" rows="5" placeholder="Enter your enquiry here."></textarea>
        <br />
-     <div class="g-recaptcha" data-sitekey="6Lc5Jw0UAAAAAETBRcbNldJHFFbsxKN-ZzaN1wiG"></div>
+     <div class="g-recaptcha" data-sitekey=<?php echo $siteKey ?>></div>
       <br />
       <input name="submit" class="btn btn-primary" type="submit" title="Submit Form" value="Submit" />
     </form>
