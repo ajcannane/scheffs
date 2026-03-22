@@ -20,22 +20,25 @@ try
         // validate the ReCaptcha, if something is wrong, we throw an Exception, 
         // i.e. code stops executing and goes to catch() block
         
-        if (!isset($_POST['g-recaptcha-response'])) {
-            throw new \Exception('ReCaptcha is not set.');
-        }
+        $bypassRecaptcha = getenv('RECAPTCHA_BYPASS') === 'true';
 
-        // do not forget to enter your secret key in the config above 
-        // from https://www.google.com/recaptcha/admin
-        
-        $recaptcha = new \ReCaptcha\ReCaptcha($recaptchaSecret, new \ReCaptcha\RequestMethod\CurlPost());
-        
-        // we validate the ReCaptcha field together with the user's IP address
-        
-        $response = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
+        if (!$bypassRecaptcha) {
+            if (!isset($_POST['g-recaptcha-response'])) {
+                throw new \Exception('ReCaptcha is not set.');
+            }
 
+            // do not forget to enter your secret key in the config above
+            // from https://www.google.com/recaptcha/admin
 
-        if (!$response->isSuccess()) {
-            throw new \Exception('ReCaptcha was not validated.');
+            $recaptcha = new \ReCaptcha\ReCaptcha($recaptchaSecret, new \ReCaptcha\RequestMethod\CurlPost());
+
+            // we validate the ReCaptcha field together with the user's IP address
+
+            $response = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
+
+            if (!$response->isSuccess()) {
+                throw new \Exception('ReCaptcha was not validated.');
+            }
         }
         
         // everything went well, we can compose the message, as usually

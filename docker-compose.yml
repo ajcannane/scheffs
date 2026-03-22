@@ -1,0 +1,16 @@
+services:
+  web:
+    build: ./docker
+    ports:
+      - "8084:80"
+    volumes:
+      - ./templated-introspect:/var/www/html
+    environment:
+      - RECAPTCHA_BYPASS=true
+    depends_on:
+      - mailhog
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"
