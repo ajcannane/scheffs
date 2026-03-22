@@ -9,7 +9,7 @@
 		
 		if ($isspam != "yes")
 		{
-			$to='scheffs@bigpond.com';
+			$to='grant@scheffskitchens.com.au';
 			//$to='sudeep.viraj@bakasit.com.au';
 			while (list($key,$val) = each($_POST)){ 
 				if (($val !="") and ($val !="Submit Enquiry")) {

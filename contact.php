@@ -32,7 +32,7 @@ Hendon SA 5014 </p>
 0418 991 079           <br />
            <strong>Fax</strong> -
 (08) 8347 1426<br />
-  <strong>Email</strong> - <a href="mailto:scheffs@bigpond.com">scheffs@bigpond.com </a></p></td>
+  <strong>Email</strong> - <a href="mailto:grant@scheffskitchens.com.au">grant@scheffskitchens.com.au </a></p></td>
        <td width="389"><br><iframe width="375" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com.au/maps?q=93+Tapley's+Hill+Road,+Hendon+SA+5014&amp;ie=UTF8&amp;hl=en&amp;hq=&amp;hnear=93+Tapleys+Hill+Rd,+Hendon+South+Australia+5014&amp;ll=-34.87463,138.512664&amp;spn=0.007042,0.01605&amp;z=15&amp;iwloc=A&amp;output=embed"></iframe><br /><small><a href="http://maps.google.com.au/maps?q=93+Tapley's+Hill+Road,+Hendon+SA+5014&amp;ie=UTF8&amp;hl=en&amp;hq=&amp;hnear=93+Tapleys+Hill+Rd,+Hendon+South+Australia+5014&amp;ll=-34.87463,138.512664&amp;spn=0.007042,0.01605&amp;z=15&amp;iwloc=A&amp;source=embed" >View Larger Map</a></small></td>
      </tr>
    </table>         <!-- #EndSnippet -->
@@ -142,7 +142,7 @@ Hendon SA 5014 </p>
         <tr>
           <td valign="top"><img src="images/layout/email.png" alt="" width="30" height="30" /></td>
           <td><strong>Email</strong><br />           
-            <a href="mailto:scheffs@bigpond.com">scheffs@bigpond.com </a>  </td>
+            <a href="mailto:grant@scheffskitchens.com.au">grant@scheffskitchens.com.au </a>  </td>
         </tr>
         <tr>
           <td colspan="2" valign="top"><img src="images/layout/hr.gif" width="222" height="1" /></td>
