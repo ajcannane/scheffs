@@ -3,8 +3,8 @@
 require('recaptcha-master/src/autoload.php');
 
 // configure
-$from = 'Website contact form <scheffskitchens@gmail.com>';
-$sendTo = 'ScheffsKitchens <scheffskitchens@gmail.com>';
+$from = 'Website contact form <grant@scheffskitchens.com.au>';
+$sendTo = 'ScheffsKitchens <grant@scheffskitchens.com.au>';
 $subject = 'Correspondance from your Website';
 $fields = array('name' => 'Name', 'surname' => 'Surname', 'phone' => 'Phone', 'email' => 'Email', 'message' => 'Message'); // array variable name => Text to appear in the email
 $okMessage = 'Contact form successfully submitted. Thank you, I will get back to you soon!';

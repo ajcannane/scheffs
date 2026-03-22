@@ -58,7 +58,7 @@ $lang = 'en';
                     <strong>Scheff&apos;s Kitchens &amp; Cabinets</strong>
                     <br>93 Tapley's Hill Road,
                     <br>Hendon SA 5014
-                <br><i class="fa fa-envelope" aria-hidden="true">&nbsp;scheffs@bigpond.com</i>
+                <br><i class="fa fa-envelope" aria-hidden="true">&nbsp;grant@scheffskitchens.com.au</i>
                 <br><i class="fa fa-phone" aria-hidden="true">&nbsp;(08) 8445 6234</i><br>
                     </address>
                     </div>
@@ -81,7 +81,7 @@ $lang = 'en';
 
                 if ($isspam != "yes")
                 {
-                        //$to='scheffs@bigpond.com';
+                        //$to='grant@scheffskitchens.com.au';
                         $to='ajcannane@gmail.com';
                         //$to='sudeep.viraj@bakasit.com.au';
                         while (list($key,$val) = each($_POST)){
