@@ -159,7 +159,7 @@ Hendon SA 5014 </p>
     <img src="images/layout/quote.jpg" alt="" width="223" height="126" /></div>
   <div style="clear: both;">
   </div><div id="footer">
-  <p class="copytext">Copyright © 2011 Scheff's Kitchens &amp; Cabinets |  Website Design by <a href="http://www.bakasit.com.au" target="_blank">Bakas IT Solutions</a></p>
+  <p class="copytext">Copyright © 2026 Scheff's Kitchens &amp; Cabinets |  Website Design by <a href="http://www.bakasit.com.au" target="_blank">Bakas IT Solutions</a></p>
 </div>
 </div>  
 </div>
