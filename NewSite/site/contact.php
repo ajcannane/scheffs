@@ -5,9 +5,9 @@
 require_once __DIR__ . '/./vendor/autoload.php';
 
 // Register API keys at https://www.google.com/recaptcha/admin
-$siteKey = '6Lf4RkAUAAAAAEZR8lt6JeG3HVPTgoPzaTC37Jo5';
-$secret = '6Lf4RkAUAAAAAEddKKviiUVsYngOF-l-nLxum_7m';
-$enquiryTo = 'ajcannane@gmail.com';
+$siteKey = getenv('RECAPTCHA_SITE_KEY');
+$secret = getenv('RECAPTCHA_SECRET_KEY');
+$enquiryTo = getenv('ENQUIRY_EMAIL');
 
 // reCAPTCHA supported 40+ languages listed here: https://developers.google.com/recaptcha/docs/language
 $lang = 'en';

@@ -5,8 +5,8 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 // Register API keys at https://www.google.com/recaptcha/admin
-$siteKey = '6Lc5Jw0UAAAAAETBRcbNldJHFFbsxKN-ZzaN1wiG';
-$secret = '6Lc5Jw0UAAAAAKUkceAYCZoaH5Ysd7cxI2GbPoyr';
+$siteKey = getenv('RECAPTCHA_SITE_KEY');
+$secret = getenv('RECAPTCHA_SECRET_KEY');
 
 // reCAPTCHA supported 40+ languages listed here: https://developers.google.com/recaptcha/docs/language
 $lang = 'en';
@@ -52,7 +52,7 @@ $lang = 'en';
                     </address>
                     </td>
                     <td>
-<iframe width="300" height="225" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJxyBsM4TGsGoRG5TfcLIUqBI&key=AIzaSyBdUxQUUlnvKl2EutYG_iQy2ExlGFNhuJ4" allowfullscreen></iframe>
+<iframe width="300" height="225" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJxyBsM4TGsGoRG5TfcLIUqBI&key=<?php echo getenv('GOOGLE_MAPS_API_KEY'); ?>" allowfullscreen></iframe>
                       </td>
                     </tr>
                 </table>
@@ -68,7 +68,7 @@ $lang = 'en';
       <input type="text" name="phone" id="phone2" placeholder="0457114557"/></td>
     <label>Enquiry</label>
       <textarea name="enquiry" id="textarea2" cols="45" rows="5" placeholder="Enter your enquiry here."></textarea>
-      <div class="g-recaptcha" data-sitekey="6Lc5Jw0UAAAAAETBRcbNldJHFFbsxKN-ZzaN1wiG"></div>
+      <div class="g-recaptcha" data-sitekey="<?php echo $siteKey; ?>"></div>
       <br />
       <input name="submit" class="btn btn-primary" type="submit" title="Submit Form" value="Submit" />
     </form>
