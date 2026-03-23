@@ -4,7 +4,7 @@ services:
     ports:
       - "8084:80"
     volumes:
-      - ./templated-introspect:/var/www/html
+      - ./deployed_site:/var/www/html
     environment:
       - RECAPTCHA_BYPASS=true
       - GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
