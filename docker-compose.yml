@@ -7,6 +7,10 @@ services:
       - ./templated-introspect:/var/www/html
     environment:
       - RECAPTCHA_BYPASS=true
+      - GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
+      - RECAPTCHA_SITE_KEY=${RECAPTCHA_SITE_KEY}
+      - RECAPTCHA_SECRET_KEY=${RECAPTCHA_SECRET_KEY}
+      - ENQUIRY_EMAIL=${ENQUIRY_EMAIL}
     depends_on:
       - mailhog
 
