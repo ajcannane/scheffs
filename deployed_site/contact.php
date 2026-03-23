@@ -9,7 +9,7 @@ $subject = 'Correspondance from your Website';
 $fields = array('name' => 'Name', 'surname' => 'Surname', 'phone' => 'Phone', 'email' => 'Email', 'message' => 'Message'); // array variable name => Text to appear in the email
 $okMessage = 'Contact form successfully submitted. Thank you, I will get back to you soon!';
 $errorMessage = 'There was an error while submitting the form. Please try again later';
-$recaptchaSecret = '6Ld6RUAUAAAAACVrXUdBLReGNJdzQUQMb5kke7Te';
+$recaptchaSecret = getenv('RECAPTCHA_SECRET_KEY');
 
 // let's do the sending
 
