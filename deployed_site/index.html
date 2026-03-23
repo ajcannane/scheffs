@@ -11,9 +11,6 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="assets/css/main.css" />
-	<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"> -->
-	<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/less/close.less" rel="stylesheet"> -->
-	<!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
 </head>
 
 <body>
@@ -213,7 +210,7 @@
 		</div>
 	</section>
 	<section id="four">
-		<a name="contact"></a>
+		<span id="contact"></span>
 		<div class="inner">
 			<article>
 				<span class="image right">
@@ -246,8 +243,8 @@
 				</div>
 			</article>
 			<article>
-				<iframe frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:Eio0LzE4IENpcmN1aXQgRHIsIEhlbmRvbiBTQSA1MDE0LCBBdXN0cmFsaWE&key=AIzaSyBSzmjD4m4pwLFNtWTnKKfMHTVJUJ5xgVc"
-				    allowfullscreen></iframe>
+				<iframe frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:Eio0LzE4IENpcmN1aXQgRHIsIEhlbmRvbiBTQSA1MDE0LCBBdXN0cmFsaWE&key=<?= htmlspecialchars(getenv('GOOGLE_MAPS_API_KEY')) ?>"
+				    allowfullscreen referrerpolicy="no-referrer" loading="lazy"></iframe>
 			</article>
 		</div>
 	</section>
@@ -295,9 +292,7 @@
 					</div>
 
 					<div class="field form-group">
-						<!-- Replace data-sitekey with your own one, generated at https://www.google.com/recaptcha/admin -->
-						<!-- <div class="g-recaptcha" data-sitekey="6Lf4RkAUAAAAAEZR8lt6JeG3HVPTgoPzaTC37Jo5"></div> -->
-						<div class="g-recaptcha" data-sitekey="6Ld6RUAUAAAAAPSGNm4_bJpuqiuN9tnYsFZvdtOm"></div>
+						<div class="g-recaptcha" data-sitekey="<?= htmlspecialchars(getenv('RECAPTCHA_SITE_KEY')) ?>"></div>
 					</div>
 
 					<div class="field actions">
@@ -320,8 +315,7 @@
 	<script src="assets/js/skel.min.js"></script>
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
-	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 	<script src="assets/js/validator.js"></script>
 	<script src="assets/js/contact.js"></script>
