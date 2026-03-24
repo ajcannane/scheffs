@@ -4068,3 +4068,239 @@ div.gal {
 			font-size: 24px;
 			line-height: inherit;
 		}
+
+/* ── Contact modal ──────────────────────────────────────── */
+
+.modal-backdrop {
+	position: fixed;
+	top: 0; left: 0;
+	width: 100%; height: 100%;
+	background: rgba(0, 0, 0, 0.75);
+	z-index: 10010;
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	top: 0; left: 0;
+	width: 100%; height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	z-index: 10020;
+	outline: 0;
+}
+
+.modal.in {
+	display: block;
+}
+
+.modal-dialog {
+	margin: 4em auto;
+	max-width: 640px;
+	padding: 0 1em;
+	width: auto;
+}
+
+.modal-content {
+	background: #f5f5f5;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	color: #444;
+	padding: 2em;
+	position: relative;
+}
+
+.modal-header {
+	border-bottom: 2px solid #e5474b;
+	margin-bottom: 1.5em;
+	padding-bottom: 0.75em;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+#contactModal .modal-title {
+	color: #222;
+	font-size: 1.4em;
+	margin: 0;
+}
+
+#contactModal .close {
+	background: none;
+	border: none;
+	border-radius: 50%;
+	color: #666;
+	cursor: pointer;
+	font-size: 0.85em;
+	width: 2em;
+	height: 2em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	margin: 0;
+	flex-shrink: 0;
+	transition: background 0.15s, color 0.15s;
+}
+
+#contactModal .close:hover {
+	background: rgba(0, 0, 0, 0.08);
+	color: #222;
+}
+
+/* Form field colours inside modal */
+#contactModal label {
+	color: #333;
+}
+
+#contactModal input,
+#contactModal select,
+#contactModal textarea {
+	color: #333;
+	background: #fff;
+	border-color: rgba(0, 0, 0, 0.2);
+}
+
+#contactModal input:focus,
+#contactModal select:focus,
+#contactModal textarea:focus {
+	border-color: #e5474b;
+	box-shadow: 0 0 0 1px #e5474b;
+}
+
+#contactModal ::-webkit-input-placeholder { color: rgba(0,0,0,0.35) !important; }
+#contactModal :-moz-placeholder            { color: rgba(0,0,0,0.35) !important; }
+#contactModal ::-moz-placeholder           { color: rgba(0,0,0,0.35) !important; }
+#contactModal :-ms-input-placeholder       { color: rgba(0,0,0,0.35) !important; }
+
+#contactModal input[type="submit"],
+#contactModal input[type="button"],
+#contactModal button,
+#contactModal .button {
+	background-color: transparent;
+	box-shadow: inset 0 0 0 2px #e5474b;
+	color: #e5474b !important;
+}
+
+#contactModal input[type="submit"]:hover,
+#contactModal .button:hover {
+	background: rgba(229, 71, 75, 0.1);
+}
+
+/* Alert messages inside modal */
+#contactModal .alert {
+	border-radius: 3px;
+	margin-bottom: 1em;
+	padding: 0.75em 1em;
+}
+
+#contactModal .alert-success {
+	background: rgba(229, 71, 75, 0.1);
+	border: 1px solid #e5474b;
+	color: #333;
+}
+
+#contactModal .alert-danger,
+#contactModal .alert-error {
+	background: rgba(200, 50, 50, 0.1);
+	border: 1px solid #c83232;
+	color: #333;
+}
+
+#contactModal .alert .close {
+	font-size: 1.1em;
+	opacity: 0.7;
+}
+
+#contactModal .help-block {
+	color: #c0392b;
+	font-size: 0.8em;
+	margin-top: 0.3em;
+}
+
+#contactModal p.text-muted {
+	color: rgba(0,0,0,0.45);
+	font-size: 0.85em;
+}
+
+@media screen and (max-width: 736px) {
+	.modal-dialog {
+		margin: 1em auto;
+	}
+}
+
+/* ── Success modal ──────────────────────────────────────── */
+
+.modal-dialog-sm {
+	max-width: 420px;
+}
+
+.modal-content-success {
+	background: #fff;
+	border: none;
+	border-top: 4px solid #3a9e5f;
+	border-radius: 4px;
+	padding: 2em;
+	color: #333;
+}
+
+.modal-header-success {
+	border-bottom: none;
+	margin-bottom: 0.5em;
+	padding-bottom: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.modal-header-success .modal-title {
+	color: #3a9e5f;
+	font-size: 1.3em;
+	margin: 0;
+}
+
+.modal-header-success .modal-title .fa {
+	margin-right: 0.3em;
+}
+
+#successModal .modal-body p {
+	color: #555;
+	margin: 0 0 1.5em 0;
+}
+
+.modal-footer-actions {
+	text-align: right;
+}
+
+#successModal .button {
+	background-color: transparent;
+	box-shadow: inset 0 0 0 2px #3a9e5f;
+	color: #3a9e5f !important;
+}
+
+#successModal .button:hover {
+	background: rgba(58, 158, 95, 0.1);
+}
+
+.close-success {
+	background: none;
+	border: none;
+	border-radius: 50%;
+	color: #666;
+	cursor: pointer;
+	font-size: 0.85em;
+	width: 2em;
+	height: 2em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	margin: 0;
+	flex-shrink: 0;
+	transition: background 0.15s, color 0.15s;
+}
+
+.close-success:hover {
+	background: rgba(0, 0, 0, 0.08);
+	color: #222;
+}
