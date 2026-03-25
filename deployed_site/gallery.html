@@ -24,7 +24,7 @@
             <nav id="nav">
                 <a href="index.html">Home</a>
                 <a href="gallery.html">Gallery</a>
-                <a href="index.html#contact">Contact Us</a>
+                <a href="#" data-toggle="modal" data-target="#contactModal">Contact Us</a>
             </nav>
         </div>
     </header>
@@ -931,6 +931,9 @@
             </div>
 
         </div>
+        <!-- Contact Modal -->
+        <?php include '_contact_modal.php'; ?>
+
         <!-- Scripts -->
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/skel.min.js"></script>
@@ -939,6 +942,10 @@
         <script src="assets/js/dist/photoswipe.min.js"></script>
         <script src="assets/js/dist/photoswipe-ui-default.min.js"></script>
         <script src="assets/js/ps.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src='https://www.google.com/recaptcha/api.js?render=explicit'></script>
+        <script src="assets/js/validator.js"></script>
+        <script src="assets/js/contact.js"></script>
 </body>
 
 </html>
