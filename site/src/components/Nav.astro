@@ -1,0 +1,107 @@
+---
+interface Props {
+  currentPage?: string;
+}
+const { currentPage = '' } = Astro.props;
+---
+
+<header
+  id="site-header"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+>
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/" class="flex items-center group">
+      <img
+        src="/images/logo_652x86.gif"
+        alt="Scheff's Kitchens & Cabinets"
+        class="h-10 w-auto drop-shadow-sm"
+      />
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden md:flex items-center gap-8">
+      <a
+        href="/"
+        class={`nav-link text-sm font-medium transition-colors drop-shadow-sm ${currentPage === 'home' ? 'text-brand-300 scrolled:text-brand-600' : 'text-white hover:text-stone-200'}`}
+        data-page={currentPage === 'home' ? 'active' : ''}
+      >Home</a>
+      <a
+        href="/gallery/"
+        class={`nav-link text-sm font-medium transition-colors drop-shadow-sm ${currentPage === 'gallery' ? 'text-brand-300' : 'text-white hover:text-stone-200'}`}
+        data-page={currentPage === 'gallery' ? 'active' : ''}
+      >Gallery</a>
+      <a
+        href="/#contact"
+        class="nav-cta text-sm font-semibold px-5 py-2 bg-brand-600 text-white rounded-full hover:bg-brand-700 transition-colors"
+      >Book a Quote</a>
+    </nav>
+
+    <!-- Mobile hamburger -->
+    <button
+      id="nav-toggle"
+      class="md:hidden nav-link text-white p-2 rounded"
+      aria-label="Toggle menu"
+    >
+      <svg id="icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+      <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden bg-white border-t border-stone-100 shadow-lg"
+  >
+    <nav class="flex flex-col px-6 py-4 gap-1">
+      <a href="/" class="text-stone-800 text-sm font-medium py-3 border-b border-stone-100">Home</a>
+      <a href="/gallery/" class="text-stone-800 text-sm font-medium py-3 border-b border-stone-100">Gallery</a>
+      <a href="/#contact" class="mt-3 inline-flex items-center justify-center px-5 py-2.5 bg-brand-600 text-white rounded-full font-semibold text-sm hover:bg-brand-700 transition-colors">Book a Quote</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById('site-header')!;
+  const toggle = document.getElementById('nav-toggle')!;
+  const mobileMenu = document.getElementById('mobile-menu')!;
+  const iconOpen = document.getElementById('icon-open')!;
+  const iconClose = document.getElementById('icon-close')!;
+  const navLinks = header.querySelectorAll<HTMLElement>('.nav-link');
+
+  // Transparent-to-white on scroll
+  function updateHeader() {
+    const scrolled = window.scrollY > 60;
+    header.classList.toggle('bg-white/95', scrolled);
+    header.classList.toggle('backdrop-blur-sm', scrolled);
+    header.classList.toggle('shadow-sm', scrolled);
+
+    navLinks.forEach(el => {
+      if (el.dataset.page === 'active') {
+        el.classList.toggle('text-brand-600', scrolled);
+        el.classList.toggle('text-brand-300', !scrolled);
+        el.classList.toggle('drop-shadow-sm', !scrolled);
+      } else {
+        el.classList.toggle('text-stone-800', scrolled);
+        el.classList.toggle('text-white', !scrolled);
+        el.classList.toggle('hover:text-stone-600', scrolled);
+        el.classList.toggle('hover:text-stone-200', !scrolled);
+        el.classList.toggle('drop-shadow-sm', !scrolled);
+      }
+    });
+  }
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  updateHeader();
+
+  // Mobile menu toggle
+  toggle.addEventListener('click', () => {
+    const isOpen = !mobileMenu.classList.contains('hidden');
+    mobileMenu.classList.toggle('hidden', isOpen);
+    iconOpen.classList.toggle('hidden', !isOpen);
+    iconClose.classList.toggle('hidden', isOpen);
+  });
+</script>
