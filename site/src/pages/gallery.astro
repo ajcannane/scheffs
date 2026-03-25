@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import GallerySection from '../components/GallerySection.astro';
+import { galleryData } from '../data/gallery';
+---
+
+<BaseLayout
+  title="Gallery – Scheff's Kitchens & Cabinets"
+  description="Browse our portfolio of custom kitchens, benchtops, vanities, wall units and more."
+>
+  <Nav currentPage="gallery" />
+
+  <!-- Page header -->
+  <div
+    class="relative pt-32 pb-16 bg-stone-900 bg-cover bg-center"
+    style="background-image: url('/images/Kitchen/45_960x720.jpg')"
+  >
+    <div class="absolute inset-0 bg-stone-900/70"></div>
+    <div class="relative z-10 max-w-6xl mx-auto px-6">
+      <p class="text-brand-300 text-sm font-semibold tracking-widest uppercase mb-2">Portfolio</p>
+      <h1 class="font-display text-4xl md:text-5xl font-extrabold text-white mb-4">Our Work</h1>
+      <p class="text-stone-300 text-lg max-w-xl">
+        Various samples of hand crafted kitchens and cabinets by Scheff's.
+      </p>
+
+      <!-- Category quick links -->
+      <div class="flex flex-wrap gap-2 mt-6">
+        {galleryData.map((cat) => (
+          <a
+            href={`#${cat.id}`}
+            class="px-3 py-1.5 text-xs font-medium bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors border border-white/20"
+          >
+            {cat.title}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery content -->
+  <main class="max-w-6xl mx-auto px-6 py-16">
+    {galleryData.map((category) => (
+      <GallerySection category={category} />
+    ))}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-stone-900 text-stone-400 py-8">
+    <div class="max-w-6xl mx-auto px-6 text-center text-sm">
+      <p>&copy; Scheff's Kitchens &amp; Cabinets {new Date().getFullYear()}</p>
+    </div>
+  </footer>
+</BaseLayout>
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import 'photoswipe/style.css';
+
+  document.querySelectorAll<HTMLElement>('.gallery-section').forEach((gallery) => {
+    const lightbox = new PhotoSwipeLightbox({
+      gallery,
+      children: 'a[data-pswp-width]',
+      pswpModule: () => import('photoswipe'),
+    });
+    lightbox.init();
+  });
+</script>

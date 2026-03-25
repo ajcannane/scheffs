@@ -1,0 +1,162 @@
+---
+const recaptchaKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY ?? '';
+---
+
+<form id="contact-form" novalidate>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+    <div>
+      <label for="form_name" class="block text-sm font-medium text-stone-700 mb-1">
+        First name <span class="text-red-500">*</span>
+      </label>
+      <input
+        id="form_name"
+        type="text"
+        name="name"
+        required
+        placeholder="Your first name"
+        class="w-full px-4 py-2.5 border border-stone-200 rounded-lg bg-white text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition-shadow"
+      />
+    </div>
+    <div>
+      <label for="form_lastname" class="block text-sm font-medium text-stone-700 mb-1">
+        Last name <span class="text-red-500">*</span>
+      </label>
+      <input
+        id="form_lastname"
+        type="text"
+        name="surname"
+        required
+        placeholder="Your last name"
+        class="w-full px-4 py-2.5 border border-stone-200 rounded-lg bg-white text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition-shadow"
+      />
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+    <div>
+      <label for="form_email" class="block text-sm font-medium text-stone-700 mb-1">
+        Email <span class="text-red-500">*</span>
+      </label>
+      <input
+        id="form_email"
+        type="email"
+        name="email"
+        required
+        placeholder="your@email.com"
+        class="w-full px-4 py-2.5 border border-stone-200 rounded-lg bg-white text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition-shadow"
+      />
+    </div>
+    <div>
+      <label for="form_phone" class="block text-sm font-medium text-stone-700 mb-1">Phone</label>
+      <input
+        id="form_phone"
+        type="tel"
+        name="phone"
+        placeholder="Your phone number"
+        class="w-full px-4 py-2.5 border border-stone-200 rounded-lg bg-white text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition-shadow"
+      />
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <label for="form_message" class="block text-sm font-medium text-stone-700 mb-1">
+      Message <span class="text-red-500">*</span>
+    </label>
+    <textarea
+      id="form_message"
+      name="message"
+      required
+      rows="5"
+      placeholder="Tell us about your project..."
+      class="w-full px-4 py-2.5 border border-stone-200 rounded-lg bg-white text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition-shadow resize-none"
+    ></textarea>
+  </div>
+
+  {recaptchaKey && (
+    <div class="mb-4">
+      <div class="g-recaptcha" data-sitekey={recaptchaKey}></div>
+    </div>
+  )}
+
+  <div id="form-status" class="hidden mb-4 px-4 py-3 rounded-lg text-sm font-medium"></div>
+
+  <button
+    type="submit"
+    id="form-submit"
+    class="w-full sm:w-auto px-8 py-3 bg-brand-500 text-white rounded-lg font-medium hover:bg-brand-600 active:bg-brand-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    Send Message
+  </button>
+  <p class="mt-3 text-xs text-stone-400"><span class="text-red-500">*</span> Required fields</p>
+</form>
+
+{recaptchaKey && <script src="https://www.google.com/recaptcha/api.js" async defer is:inline />}
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const statusEl = document.getElementById('form-status') as HTMLDivElement;
+  const submitBtn = document.getElementById('form-submit') as HTMLButtonElement;
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Basic validation
+      const required = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]');
+      let valid = true;
+      required.forEach((field) => {
+        if (!field.value.trim()) {
+          field.classList.add('border-red-400');
+          valid = false;
+        } else {
+          field.classList.remove('border-red-400');
+        }
+      });
+      if (!valid) {
+        showStatus('Please fill in all required fields.', 'error');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      try {
+        const formData = new FormData(form);
+        const res = await fetch('/contact.php', {
+          method: 'POST',
+          headers: { 'X-Requested-With': 'XMLHttpRequest' },
+          body: formData,
+        });
+        const data = await res.json();
+        if (data.type === 'success') {
+          showStatus(data.message, 'success');
+          form.reset();
+          if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+        } else {
+          showStatus(data.message, 'error');
+        }
+      } catch {
+        showStatus('Something went wrong. Please try again.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+      }
+    });
+
+    // Clear red border on input
+    form.querySelectorAll('input, textarea').forEach((field) => {
+      field.addEventListener('input', () => field.classList.remove('border-red-400'));
+    });
+  }
+
+  function showStatus(message: string, type: 'success' | 'error') {
+    statusEl.textContent = message;
+    statusEl.className = `mb-4 px-4 py-3 rounded-lg text-sm font-medium ${
+      type === 'success'
+        ? 'bg-green-50 text-green-800 border border-green-200'
+        : 'bg-red-50 text-red-800 border border-red-200'
+    }`;
+    statusEl.classList.remove('hidden');
+    statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>

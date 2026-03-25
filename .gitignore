@@ -1,0 +1,15 @@
+# Environment files
+.env
+
+# Astro build output in deployed_site/ (generated, not source-controlled)
+deployed_site/index.html
+deployed_site/gallery/
+deployed_site/_astro/
+deployed_site/.htaccess
+
+# Astro project node_modules
+site/node_modules/
+site/.astro/
+
+# OS
+.DS_Store

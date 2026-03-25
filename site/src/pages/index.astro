@@ -1,0 +1,286 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import ContactInfo from '../components/ContactInfo.astro';
+import ContactForm from '../components/ContactForm.astro';
+import MapEmbed from '../components/MapEmbed.astro';
+---
+
+<BaseLayout title="Scheff's Kitchens & Cabinets">
+  <Nav currentPage="home" />
+  <Hero />
+
+  <!-- About section — split layout -->
+  <section class="py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 lg:gap-16 items-center">
+
+        <!-- Left: kitchen photo -->
+        <div class="rounded-2xl overflow-hidden aspect-[4/3] bg-stone-100">
+          <img
+            src="/images/Kitchen/15_960x720.jpg"
+            alt="Custom kitchen installation by Scheff's"
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+
+        <!-- Right: text + stats + Grant -->
+        <div>
+          <p class="text-brand-600 text-sm font-semibold tracking-widest uppercase mb-4">About Scheff's</p>
+          <h2 class="font-display text-3xl md:text-4xl font-extrabold text-stone-900 mb-6 leading-tight">
+            Dedicated To Custom Kitchens Built With Craftsmanship
+          </h2>
+          <p class="text-stone-600 mb-4 leading-relaxed">
+            Established since 1996, Scheff's Kitchens &amp; Cabinets has created functional, beautiful
+            and unique kitchens and cabinets for South Australian homes. Through consultation and a free
+            in-house inspection, we custom build to suit your individual needs and lifestyle.
+          </p>
+          <p class="text-stone-600 mb-8 leading-relaxed">
+            We can also arrange the <em>plumbing</em>, <em>tiling</em>, <em>splashbacks</em> and
+            any <em>electrical</em> work — let us take care of organising it all.
+          </p>
+
+          <!-- Stats row -->
+          <div class="flex gap-8 mb-8 pb-8 border-b border-stone-100">
+            <div>
+              <p class="font-display text-3xl font-extrabold text-stone-900">20+</p>
+              <p class="text-stone-500 text-sm mt-0.5">Years experience</p>
+            </div>
+            <div>
+              <p class="font-display text-3xl font-extrabold text-stone-900">SA</p>
+              <p class="text-stone-500 text-sm mt-0.5">Based &amp; built</p>
+            </div>
+            <div>
+              <p class="font-display text-3xl font-extrabold text-stone-900">Free</p>
+              <p class="text-stone-500 text-sm mt-0.5">Assessment</p>
+            </div>
+          </div>
+
+          <!-- Grant trust signal -->
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full overflow-hidden bg-stone-200 shrink-0">
+              <img
+                src="/images/Director-Grant-Scheuffele_180x240.jpg"
+                alt="Grant Scheuffele"
+                class="w-full h-full object-cover object-top"
+              />
+            </div>
+            <div>
+              <p class="text-stone-900 text-sm font-semibold">Grant Scheuffele</p>
+              <p class="text-stone-500 text-sm">Director &amp; Head Cabinetmaker</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What We Build — photography-first cards -->
+  <section class="py-24 bg-warm-50">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="mb-12">
+        <p class="text-brand-600 text-sm font-semibold tracking-widest uppercase mb-4">Our Work</p>
+        <h2 class="font-display text-3xl md:text-4xl font-extrabold text-stone-900">
+          What We Build
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Kitchens -->
+        <article class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+          <div class="aspect-[4/3] overflow-hidden bg-stone-100">
+            <img
+              src="/images/Kitchen/15_320x240.jpg"
+              alt="Custom kitchen"
+              class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+              loading="lazy"
+            />
+          </div>
+          <div class="p-5">
+            <p class="text-brand-600 text-xs font-semibold tracking-widest uppercase mb-2">Kitchens</p>
+            <h3 class="font-display text-lg font-bold text-stone-900 mb-2">Custom Kitchens</h3>
+            <p class="text-stone-500 text-sm leading-relaxed mb-4">
+              Full storage solutions — pull-out pantries, lazy susans, wine racks, and more.
+            </p>
+            <a
+              href="/gallery/#kitchens"
+              class="inline-flex items-center gap-1.5 text-brand-600 text-sm font-semibold hover:text-brand-700 transition-colors"
+            >
+              See examples
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Benchtops -->
+        <article class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+          <div class="aspect-[4/3] overflow-hidden bg-stone-100">
+            <img
+              src="/images/BenchTopWidescreen_604x342.jpg"
+              alt="Stone benchtop"
+              class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+              loading="lazy"
+            />
+          </div>
+          <div class="p-5">
+            <p class="text-brand-600 text-xs font-semibold tracking-widest uppercase mb-2">Benchtops</p>
+            <h3 class="font-display text-lg font-bold text-stone-900 mb-2">Bench Tops</h3>
+            <p class="text-stone-500 text-sm leading-relaxed mb-4">
+              Stone, granite, marble, Caesar Stone, Essastone and laminated options.
+            </p>
+            <a
+              href="/gallery/#benchtop"
+              class="inline-flex items-center gap-1.5 text-brand-600 text-sm font-semibold hover:text-brand-700 transition-colors"
+            >
+              See examples
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Doors & Drawers -->
+        <article class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+          <div class="aspect-[4/3] overflow-hidden bg-stone-100">
+            <img
+              src="/images/Doors_768x434.jpg"
+              alt="Cabinet doors"
+              class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+              loading="lazy"
+            />
+          </div>
+          <div class="p-5">
+            <p class="text-brand-600 text-xs font-semibold tracking-widest uppercase mb-2">Doors &amp; Drawers</p>
+            <h3 class="font-display text-lg font-bold text-stone-900 mb-2">Doors &amp; Drawers</h3>
+            <p class="text-stone-500 text-sm leading-relaxed mb-4">
+              Soft-close mechanisms in polyurethane, melamine, solid timber, or vinyl finishes.
+            </p>
+            <a
+              href="/gallery/#doors"
+              class="inline-flex items-center gap-1.5 text-brand-600 text-sm font-semibold hover:text-brand-700 transition-colors"
+            >
+              See examples
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Vanities -->
+        <article class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+          <div class="aspect-[4/3] overflow-hidden bg-stone-100">
+            <img
+              src="/images/Vanity_768x434.jpg"
+              alt="Custom vanity"
+              class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+              loading="lazy"
+            />
+          </div>
+          <div class="p-5">
+            <p class="text-brand-600 text-xs font-semibold tracking-widest uppercase mb-2">Vanities</p>
+            <h3 class="font-display text-lg font-bold text-stone-900 mb-2">Vanities</h3>
+            <p class="text-stone-500 text-sm leading-relaxed mb-4">
+              Custom-made vanities that give you the freedom to design a solution that works for you.
+            </p>
+            <a
+              href="/gallery/#vanity"
+              class="inline-flex items-center gap-1.5 text-brand-600 text-sm font-semibold hover:text-brand-700 transition-colors"
+            >
+              See examples
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Wall & Entertainment Units -->
+        <article class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+          <div class="aspect-[4/3] overflow-hidden bg-stone-100">
+            <img
+              src="/images/WallUnit_768x434.jpg"
+              alt="Wall and entertainment unit"
+              class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+              loading="lazy"
+            />
+          </div>
+          <div class="p-5">
+            <p class="text-brand-600 text-xs font-semibold tracking-widest uppercase mb-2">Wall Units</p>
+            <h3 class="font-display text-lg font-bold text-stone-900 mb-2">Wall &amp; Entertainment Units</h3>
+            <p class="text-stone-500 text-sm leading-relaxed mb-4">
+              Tailor-made storage units built exactly the way you want them.
+            </p>
+            <a
+              href="/gallery/#wallunit"
+              class="inline-flex items-center gap-1.5 text-brand-600 text-sm font-semibold hover:text-brand-700 transition-colors"
+            >
+              See examples
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- CTA card -->
+        <article class="bg-brand-600 rounded-2xl p-8 flex flex-col justify-between">
+          <div>
+            <p class="text-brand-200 text-xs font-semibold tracking-widest uppercase mb-4">Get Started</p>
+            <h3 class="font-display text-xl font-bold text-white mb-3 leading-tight">
+              Not sure what you need?
+            </h3>
+            <p class="text-brand-100 text-sm leading-relaxed">
+              We offer a free in-home assessment — we'll come to you and work through the options together.
+            </p>
+          </div>
+          <a
+            href="/#contact"
+            class="mt-8 inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-brand-700 rounded font-semibold text-sm hover:bg-brand-50 transition-colors"
+          >
+            Book a Free Assessment
+          </a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact section -->
+  <section id="contact" class="py-24 bg-white scroll-mt-16">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="mb-12">
+        <p class="text-brand-600 text-sm font-semibold tracking-widest uppercase mb-4">Contact</p>
+        <h2 class="font-display text-3xl md:text-4xl font-extrabold text-stone-900">Get in Touch</h2>
+        <p class="text-stone-500 mt-3 max-w-md">
+          Ready to start your project? Send us a message and we'll get back to you soon.
+        </p>
+      </div>
+
+      <!-- Contact info + map -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+        <ContactInfo />
+        <MapEmbed />
+      </div>
+
+      <!-- Form -->
+      <div class="bg-warm-50 rounded-2xl p-8">
+        <h3 class="font-display text-xl font-bold text-stone-900 mb-6">Send a Message</h3>
+        <ContactForm />
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-stone-900 text-stone-400 py-8">
+    <div class="max-w-6xl mx-auto px-6 text-center text-sm">
+      <p>&copy; Scheff's Kitchens &amp; Cabinets {new Date().getFullYear()}</p>
+    </div>
+  </footer>
+</BaseLayout>

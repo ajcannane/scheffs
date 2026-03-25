@@ -1,0 +1,23 @@
+---
+const mapsKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY ?? '';
+const mapSrc = `https://www.google.com/maps/embed/v1/place?q=place_id:Eio0LzE4IENpcmN1aXQgRHIsIEhlbmRvbiBTQSA1MDE0LCBBdXN0cmFsaWE&key=${mapsKey}`;
+---
+
+<div class="w-full h-64 md:h-full min-h-64 rounded-xl overflow-hidden shadow-md">
+  {mapsKey ? (
+    <iframe
+      class="w-full h-full"
+      frameborder="0"
+      style="border:0"
+      src={mapSrc}
+      allowfullscreen
+      referrerpolicy="no-referrer"
+      loading="lazy"
+      title="Scheff's Kitchens location"
+    />
+  ) : (
+    <div class="w-full h-full bg-stone-200 flex items-center justify-center text-stone-400 text-sm">
+      <p>Map unavailable (no API key)</p>
+    </div>
+  )}
+</div>
