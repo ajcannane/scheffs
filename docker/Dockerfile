@@ -1,4 +1,6 @@
 FROM php:apache
-RUN apt-get update && apt-get install -y msmtp && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y msmtp gettext-base && rm -rf /var/lib/apt/lists/*
 COPY php.ini /usr/local/etc/php/conf.d/mail.ini
-COPY html-as-php.conf /etc/apache2/conf-enabled/html-as-php.conf
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]

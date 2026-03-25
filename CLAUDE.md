@@ -20,12 +20,12 @@ docker-compose up --build  # Rebuild after Dockerfile changes
 
 ## Architecture
 
-**`deployed_site/`** — all website content served by Apache inside the container. `.html` files are processed as PHP (via `docker/html-as-php.conf`), enabling environment variable injection across the site.
+**`deployed_site/`** — all website content served by Apache inside the container. `index.html.tmpl` and `gallery.html.tmpl` contain `${VAR}` placeholders for environment variables; the container entrypoint runs `envsubst` at startup to produce the final `.html` files (gitignored).
 
 **`docker/`** — container configuration:
-- `Dockerfile` — PHP/Apache base, installs `msmtp` for mail relay
+- `Dockerfile` — PHP/Apache base, installs `msmtp` for mail relay and `gettext-base` for `envsubst`
+- `entrypoint.sh` — substitutes env vars into HTML templates at container startup
 - `php.ini` — routes `mail()` calls through msmtp → mailhog in dev
-- `html-as-php.conf` — Apache config enabling PHP in `.html` files
 
 **Contact form** (`deployed_site/contact.php`):
 - ReCAPTCHA v2 validation (bypass in dev: set `RECAPTCHA_BYPASS=true` in `.env`)
@@ -33,6 +33,6 @@ docker-compose up --build  # Rebuild after Dockerfile changes
 - Email sent via `mail()` → msmtp → mailhog
 
 **Environment variables** (set in `.env`, injected via `docker-compose.yml`):
-- `GOOGLE_MAPS_API_KEY` — embedded in `gallery.html`
+- `GOOGLE_MAPS_API_KEY` — embedded in `gallery.html` and `index.html`
 - `RECAPTCHA_SITE_KEY` / `RECAPTCHA_SECRET_KEY` — contact form
 - `ENQUIRY_EMAIL` — contact form recipient

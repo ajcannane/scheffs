@@ -243,7 +243,7 @@
 				</div>
 			</article>
 			<article>
-				<iframe frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:Eio0LzE4IENpcmN1aXQgRHIsIEhlbmRvbiBTQSA1MDE0LCBBdXN0cmFsaWE&key=<?= htmlspecialchars(getenv('GOOGLE_MAPS_API_KEY')) ?>"
+				<iframe frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:Eio0LzE4IENpcmN1aXQgRHIsIEhlbmRvbiBTQSA1MDE0LCBBdXN0cmFsaWE&key=${GOOGLE_MAPS_API_KEY}"
 				    allowfullscreen referrerpolicy="no-referrer" loading="lazy"></iframe>
 			</article>
 		</div>
@@ -292,7 +292,7 @@
 					</div>
 
 					<div class="field form-group">
-						<div class="g-recaptcha" data-sitekey="<?= htmlspecialchars(getenv('RECAPTCHA_SITE_KEY')) ?>"></div>
+						<div class="g-recaptcha" data-sitekey="${RECAPTCHA_SITE_KEY}"></div>
 					</div>
 
 					<div class="field actions">
