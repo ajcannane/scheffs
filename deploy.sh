@@ -14,7 +14,7 @@ set -a; source .env; set +a
 #
 # Then reference the alias name below:
 GODADDY_ALIAS="godaddy_scheff"
-GODADDY_PATH="/path/to/public_html"
+GODADDY_PATH="public_html"
 
 # Generate final HTML from templates (same substitutions as entrypoint.sh)
 envsubst '${GOOGLE_MAPS_API_KEY} ${RECAPTCHA_SITE_KEY}' \
