@@ -1486,7 +1486,8 @@ body {
 }
 
 body {
-	background: #f00;
+	background: #ffffff;
+	overflow-x: hidden;
 }
 
 body.is-loading *,
@@ -1506,7 +1507,7 @@ body.is-loading *:after {
 /* Type */
 
 body {
-	background-color: #f00;
+	background-color: #ffffff;
 	color: #111111;
 }
 
@@ -3764,11 +3765,11 @@ body.is-loading #banner:after {
 	}
 	#four .inner article {
 		width: 100%;
-		min-width: 358px;
 		max-width: 420px;
 	}
 	#four .inner article iframe {
-		width: 420px;
+		width: 100%;
+		max-width: 420px;
 	}
 	#four .inner article:first-child {
 		padding-right: 0;
