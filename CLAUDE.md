@@ -36,3 +36,21 @@ docker-compose up --build  # Rebuild after Dockerfile changes
 - `GOOGLE_MAPS_API_KEY` — embedded in `gallery.html` and `index.html`
 - `RECAPTCHA_SITE_KEY` / `RECAPTCHA_SECRET_KEY` — contact form
 - `ENQUIRY_EMAIL` — contact form recipient
+
+## Deployment
+
+Use `deploy.sh` to deploy to GoDaddy hosting via SCP. The script:
+1. Runs `envsubst` on HTML templates to inject environment variables
+2. SCPs `deployed_site/` assets and generated HTML to the remote server
+
+**Setup:**
+1. Add an SSH alias to `~/.ssh/config`:
+   ```
+   Host godaddy_scheff
+       HostName ssh.example.com
+       User your_godaddy_username
+       IdentityFile ~/.ssh/your_key
+   ```
+2. Update `GODADDY_ALIAS` and `GODADDY_PATH` in `deploy.sh`
+3. Ensure `.env` is populated with all required variables (see Environment variables above)
+4. Run: `./deploy.sh`

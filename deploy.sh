@@ -4,8 +4,16 @@ set -euo pipefail
 # Load env vars from .env
 set -a; source .env; set +a
 
-GODADDY_USER="your_ssh_user"
-GODADDY_HOST="your_host"        # e.g. ssh.example.com or IP
+# SSH Alias Configuration
+# Instead of using user@host format, define an SSH alias in ~/.ssh/config:
+#
+#   Host godaddy_scheff
+#       HostName ssh.example.com
+#       User your_godaddy_username
+#       IdentityFile ~/.ssh/your_key
+#
+# Then reference the alias name below:
+GODADDY_ALIAS="godaddy_scheff"
 GODADDY_PATH="/path/to/public_html"
 
 # Generate final HTML from templates (same substitutions as entrypoint.sh)
@@ -22,6 +30,6 @@ scp -r deployed_site/assets \
         deployed_site/contact.php \
         deployed_site/index.html \
         deployed_site/gallery.html \
-        "${GODADDY_USER}@${GODADDY_HOST}:${GODADDY_PATH}/"
+        "${GODADDY_ALIAS}:${GODADDY_PATH}/"
 
 echo "Deploy complete."
