@@ -20,12 +20,12 @@ docker-compose up --build  # Rebuild after Dockerfile changes
 
 ## Architecture
 
-**`deployed_site/`** — all website content served by Apache inside the container. `index.html.tmpl` and `gallery.html.tmpl` contain `${VAR}` placeholders for environment variables; the container entrypoint runs `envsubst` at startup to produce the final `.html` files (gitignored).
+**`deployed_site/`** — all website content served by Apache inside the container. `.html` files are processed as PHP (via `docker/html-as-php.conf`), enabling environment variable injection across the site.
 
 **`docker/`** — container configuration:
-- `Dockerfile` — PHP/Apache base, installs `msmtp` for mail relay and `gettext-base` for `envsubst`
-- `entrypoint.sh` — substitutes env vars into HTML templates at container startup
+- `Dockerfile` — PHP/Apache base, installs `msmtp` for mail relay
 - `php.ini` — routes `mail()` calls through msmtp → mailhog in dev
+- `html-as-php.conf` — Apache config enabling PHP in `.html` files
 
 **Contact form** (`deployed_site/contact.php`):
 - ReCAPTCHA v2 validation (bypass in dev: set `RECAPTCHA_BYPASS=true` in `.env`)
@@ -53,7 +53,7 @@ Deploy to GoDaddy hosting via SCP using either script below.
 3. Ensure `.env` is populated with all required variables (see Environment variables above)
 
 **`deploy.sh`** — full site deployment:
-1. Runs `envsubst` on HTML templates to inject environment variables
+1. Generates `.html` files via PHP processing (environment variables injected)
 2. SCPs assets, PHP, and generated HTML to the remote server
 3. Run: `./deploy.sh`
 

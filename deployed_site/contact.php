@@ -31,13 +31,13 @@ try
         // validate the ReCaptcha, if something is wrong, we throw an Exception,
         // i.e. code stops executing and goes to catch() block
 
-        if (!isset($_POST['g-recaptcha-response'])) {
-            throw new \Exception('ReCaptcha is not set.');
-        }
-
         // ReCaptcha validation — bypass allowed in development via RECAPTCHA_BYPASS=true
         $recaptchaBypass = filter_var(getenv('RECAPTCHA_BYPASS'), FILTER_VALIDATE_BOOLEAN);
         if (!$recaptchaBypass) {
+            if (!isset($_POST['g-recaptcha-response'])) {
+                throw new \Exception('ReCaptcha is not set.');
+            }
+
             // ReCaptcha secret is read from the RECAPTCHA_SECRET_KEY environment variable.
             // Set this in docker-compose.yml or server environment — never hardcode it.
             $recaptchaSecret = getenv('RECAPTCHA_SECRET_KEY');
