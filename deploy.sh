@@ -25,7 +25,6 @@ envsubst '${GOOGLE_MAPS_API_KEY}' \
 
 # SCP everything except templates, .env, and local-only files
 scp -r deployed_site/assets \
-        deployed_site/images \
         deployed_site/recaptcha-master \
         deployed_site/contact.php \
         deployed_site/index.html \
