@@ -39,11 +39,9 @@ docker-compose up --build  # Rebuild after Dockerfile changes
 
 ## Deployment
 
-Use `deploy.sh` to deploy to GoDaddy hosting via SCP. The script:
-1. Runs `envsubst` on HTML templates to inject environment variables
-2. SCPs `deployed_site/` assets and generated HTML to the remote server
+Deploy to GoDaddy hosting via SCP using either script below.
 
-**Setup:**
+**Setup (one-time):**
 1. Add an SSH alias to `~/.ssh/config`:
    ```
    Host godaddy_scheff
@@ -51,6 +49,15 @@ Use `deploy.sh` to deploy to GoDaddy hosting via SCP. The script:
        User your_godaddy_username
        IdentityFile ~/.ssh/your_key
    ```
-2. Update `GODADDY_ALIAS` and `GODADDY_PATH` in `deploy.sh`
+2. Update `GODADDY_ALIAS` and `GODADDY_PATH` in both `deploy.sh` and `deploy-images.sh`
 3. Ensure `.env` is populated with all required variables (see Environment variables above)
-4. Run: `./deploy.sh`
+
+**`deploy.sh`** — full site deployment:
+1. Runs `envsubst` on HTML templates to inject environment variables
+2. SCPs assets, PHP, and generated HTML to the remote server
+3. Run: `./deploy.sh`
+
+**`deploy-images.sh`** — image-only deployment (faster for image changes):
+1. SCPs only the `images/` folder to the remote server
+2. Useful for quick image updates without re-uploading CSS/JS
+3. Run: `./deploy-images.sh`
