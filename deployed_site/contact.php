@@ -4,7 +4,8 @@ require('recaptcha-master/src/autoload.php');
 
 // configure
 $enquiryEmail = getenv('ENQUIRY_EMAIL') ?: 'grant@scheffskitchens.com.au';
-$from = 'Website contact form <' . $enquiryEmail . '>';
+$fromAddress = 'noreply@scheffskitchens.com.au';
+$from = 'Website contact form <' . $fromAddress . '>';
 $sendTo = 'ScheffsKitchens <' . $enquiryEmail . '>';
 $subject = 'Correspondance from your Website';
 $fields = array('name' => 'Name', 'surname' => 'Surname', 'phone' => 'Phone', 'email' => 'Email', 'message' => 'Message'); // array variable name => Text to appear in the email
@@ -80,15 +81,22 @@ try
             $originIp = $_SERVER['REMOTE_ADDR'];
         }
 
+        $visitorEmail = isset($_POST['email']) ? filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL) : false;
+        $replyTo = $visitorEmail ? $visitorEmail : $fromAddress;
+
         $headers = array(
-            'Content-Type: text/plain; charset="UTF-8";',
+            'Content-Type: text/plain; charset="UTF-8"',
             'From: ' . $from,
-            'Reply-To: ' . $from,
-            'Return-Path: ' . $from,
+            'Reply-To: ' . $replyTo,
+            'Return-Path: ' . $fromAddress,
             'X-Originating-IP: ' . $originIp
         );
 
-        mail($sendTo, $subject, $emailText, implode("\r\n", $headers));
+        $sent = mail($sendTo, $subject, $emailText, implode("\r\n", $headers), '-f' . $fromAddress);
+
+        if (!$sent) {
+            throw new \Exception('mail() failed to send.');
+        }
 
         $responseArray = array('type' => 'success', 'message' => $okMessage);
     }
