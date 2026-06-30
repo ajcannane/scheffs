@@ -1,65 +1,55 @@
-/*
-	Scheff's Kitchens & Cabinets by TEMPLATED
-	templated.co @templatedco
-	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
-*/
+(function () {
+  'use strict';
 
-(function($) {
+  var nav = document.querySelector('.site-nav');
+  var toggle = document.querySelector('.nav-toggle');
+  var mobileMenu = document.querySelector('.mobile-menu');
 
-	skel.breakpoints({
-		xlarge:	'(max-width: 1680px)',
-		large:	'(max-width: 1280px)',
-		medium:	'(max-width: 980px)',
-		small:	'(max-width: 736px)',
-		xsmall:	'(max-width: 480px)'
-	});
+  // Nav darkens on scroll (stays dark on gallery page which has no .hero)
+  function updateNav() {
+    if (!document.querySelector('.hero')) {
+      nav.classList.add('scrolled');
+      return;
+    }
+    nav.classList.toggle('scrolled', window.scrollY > 30);
+  }
 
-	$(function() {
+  updateNav();
+  window.addEventListener('scroll', updateNav, { passive: true });
 
-		var	$window = $(window),
-			$body = $('body');
+  // Mobile hamburger
+  if (toggle && mobileMenu) {
+    toggle.addEventListener('click', function () {
+      var open = toggle.classList.toggle('open');
+      mobileMenu.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
 
-		// Disable animations/transitions until the page has loaded.
-			$body.addClass('is-loading');
+    mobileMenu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        toggle.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
 
-			$window.on('load', function() {
-				window.setTimeout(function() {
-					$body.removeClass('is-loading');
-				}, 100);
-			});
+  // Gallery category nav — highlight active section on scroll
+  var catLinks = document.querySelectorAll('.gallery-cat-nav a');
+  if (catLinks.length && 'IntersectionObserver' in window) {
+    var sections = document.querySelectorAll('.gallery-section[id]');
 
-		// Prioritize "important" elements on medium.
-			skel.on('+medium -medium', function() {
-				$.prioritize(
-					'.important\\28 medium\\29',
-					skel.breakpoint('medium').active
-				);
-			});
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          catLinks.forEach(function (l) { l.classList.remove('active'); });
+          var link = document.querySelector('.gallery-cat-nav a[href="#' + entry.target.id + '"]');
+          if (link) link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-25% 0px -65% 0px' });
 
-		// Off-Canvas Navigation.
+    sections.forEach(function (s) { observer.observe(s); });
+  }
 
-			// Navigation Panel Toggle.
-				$('<a href="#navPanel" class="navPanelToggle"></a>')
-					.appendTo($body);
-
-			// Navigation Panel.
-				$(
-					'<div id="navPanel">' +
-						$('#nav').html() +
-						'<a href="#navPanel" class="close"></a>' +
-					'</div>'
-				)
-					.appendTo($body)
-					.panel({
-						delay: 500,
-						hideOnClick: true,
-						hideOnSwipe: true,
-						resetScroll: true,
-						resetForms: true,
-						side: 'left'
-					});
-
-
-	});
-
-})(jQuery);
+})();

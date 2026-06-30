@@ -1,29 +1,56 @@
-$(function () {
+(function () {
+  'use strict';
 
-    $('#contact-form').validator();
+  document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('contact-form');
+    if (!form) return;
 
-    $('#contact-form').on('submit', function (e) {
-        if (!e.isDefaultPrevented()) {
-            var url = "contact.php";
+    var messageEl = form.querySelector('.form-message');
+    var submitBtn = form.querySelector('[type="submit"]');
 
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: $(this).serialize(),
-                success: function (data)
-                {
-                    var messageAlert = 'alert-' + data.type;
-                    var messageText = data.message;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
 
-                    var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
-                    if (messageAlert && messageText) {
-                        $('#contact-form').find('.messages').html(alertBox);
-                        $('#contact-form')[0].reset();
-                        grecaptcha.reset();
-                    }
-                }
-            });
-            return false;
-        }
-    })
-});
+      // Clear previous message
+      messageEl.className = 'form-message';
+      messageEl.textContent = '';
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.value = 'Sending…';
+
+      fetch('contact.php', {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        body: new FormData(form),
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Network error');
+          return res.json();
+        })
+        .then(function (data) {
+          if (data.type === 'success') {
+            messageEl.className = 'form-message success';
+            messageEl.textContent = data.message;
+            form.reset();
+            if (window.grecaptcha) window.grecaptcha.reset();
+          } else {
+            throw new Error(data.message);
+          }
+        })
+        .catch(function (err) {
+          messageEl.className = 'form-message error';
+          messageEl.textContent = err.message || 'Something went wrong. Please try again.';
+        })
+        .finally(function () {
+          submitBtn.disabled = false;
+          submitBtn.value = 'Send message';
+        });
+    });
+  });
+
+})();
