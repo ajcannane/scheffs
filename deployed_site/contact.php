@@ -2,10 +2,13 @@
 // require ReCaptcha class
 require('recaptcha-master/src/autoload.php');
 
-// configure
-$enquiryEmail = getenv('ENQUIRY_EMAIL') ?: 'grant@scheffskitchens.com.au';
-$fromAddress = 'noreply@scheffskitchens.com.au';
-$from = 'Website contact form <' . $fromAddress . '>';
+// configure — check $_SERVER first (FastCGI: SetEnv lands there, not in getenv())
+function server_env(string $key): string {
+    return $_SERVER[$key] ?? getenv($key) ?: '';
+}
+
+$enquiryEmail = server_env('ENQUIRY_EMAIL') ?: 'grant@scheffskitchens.com.au';
+$from = 'Website contact form <' . $enquiryEmail . '>';
 $sendTo = 'ScheffsKitchens <' . $enquiryEmail . '>';
 $subject = 'Correspondance from your Website';
 $fields = array('name' => 'Name', 'surname' => 'Surname', 'phone' => 'Phone', 'email' => 'Email', 'message' => 'Message'); // array variable name => Text to appear in the email
@@ -37,11 +40,11 @@ try
         }
 
         // ReCaptcha validation — bypass allowed in development via RECAPTCHA_BYPASS=true
-        $recaptchaBypass = filter_var(getenv('RECAPTCHA_BYPASS'), FILTER_VALIDATE_BOOLEAN);
+        $recaptchaBypass = filter_var(server_env('RECAPTCHA_BYPASS'), FILTER_VALIDATE_BOOLEAN);
         if (!$recaptchaBypass) {
             // ReCaptcha secret is read from the RECAPTCHA_SECRET_KEY environment variable.
             // Set this in docker-compose.yml or server environment — never hardcode it.
-            $recaptchaSecret = getenv('RECAPTCHA_SECRET_KEY');
+            $recaptchaSecret = server_env('RECAPTCHA_SECRET_KEY');
             if (!$recaptchaSecret) {
                 throw new \Exception('Server configuration error.');
             }
@@ -69,30 +72,16 @@ try
             }
         }
 
-        // Sanitize X-Forwarded-For: validate as IP before trusting
-        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $forwardedIp = preg_replace('/[\r\n]/', '', $_SERVER['HTTP_X_FORWARDED_FOR']);
-            // Use only the first IP in the chain and validate it
-            $firstIp = trim(explode(',', $forwardedIp)[0]);
-            $originIp = filter_var($firstIp, FILTER_VALIDATE_IP)
-                ? "$firstIp via {$_SERVER['REMOTE_ADDR']}"
-                : $_SERVER['REMOTE_ADDR'];
-        } else {
-            $originIp = $_SERVER['REMOTE_ADDR'];
-        }
-
         $visitorEmail = isset($_POST['email']) ? filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL) : false;
-        $replyTo = $visitorEmail ? $visitorEmail : $fromAddress;
+        $replyTo = $visitorEmail ? $visitorEmail : $enquiryEmail;
 
         $headers = array(
             'Content-Type: text/plain; charset="UTF-8"',
             'From: ' . $from,
             'Reply-To: ' . $replyTo,
-            'Return-Path: ' . $fromAddress,
-            'X-Originating-IP: ' . $originIp
         );
 
-        $sent = mail($sendTo, $subject, $emailText, implode("\r\n", $headers), '-f' . $fromAddress);
+        $sent = mail($sendTo, $subject, $emailText, implode("\r\n", $headers));
 
         if (!$sent) {
             throw new \Exception('mail() failed to send.');
