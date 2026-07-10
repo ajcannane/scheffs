@@ -28,7 +28,7 @@ docker-compose up --build  # Rebuild after Dockerfile changes
 - `php.ini` — routes `mail()` calls through msmtp → mailhog in dev
 
 **Contact form** (`deployed_site/contact.php`):
-- ReCAPTCHA v2 validation (bypass in dev: set `RECAPTCHA_BYPASS=true` in `.env`)
+- ReCAPTCHA v2 validation (bypassed in dev — `docker-compose.yml` hardcodes `RECAPTCHA_BYPASS=true` for the `web` service)
 - CSRF protection via origin/referer check
 - Email sent via `mail()` → msmtp → mailhog
 
