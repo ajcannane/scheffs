@@ -1488,10 +1488,18 @@ body {
 body {
 	background: #ffffff;
 	overflow-x: hidden;
-	/* Reserve the scrollbar's width permanently so toggling body.modal-open's
-	   overflow (which removes the scrollbar) doesn't change the page's
-	   available width and shift fixed/centered content sideways. */
-	scrollbar-gutter: stable;
+}
+
+@media screen and (min-width: 981px) {
+	body {
+		/* Reserve the scrollbar's width permanently so toggling body.modal-open's
+		   overflow (which removes the scrollbar) doesn't change the page's
+		   available width and shift fixed/centered content sideways. Scoped to
+		   desktop widths that actually render a space-consuming scrollbar —
+		   real phones use overlay scrollbars and don't need this, and reserving
+		   it unconditionally shifted the modal off-center on narrow viewports. */
+		scrollbar-gutter: stable;
+	}
 }
 
 body.is-loading *,
