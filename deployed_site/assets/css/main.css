@@ -415,13 +415,13 @@ h1, h2, h3, h4 {
 
 .contact-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1.25fr;
+  grid-template-columns: 1fr 1fr;
   gap: 3rem;
   margin-top: 3rem;
   align-items: start;
 }
 
-.contact-form-col { }
+.contact-enquiry-btn { margin-top: 2rem; width: 100%; }
 
 .contact-info-photo {
   width: 76px;
@@ -564,6 +564,76 @@ h1, h2, h3, h4 {
 }
 
 /* ==========================================================================
+   Contact enquiry modal
+   ========================================================================== */
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(14,12,10,0.88);
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.modal-overlay.open { display: flex; }
+
+body.modal-open { overflow: hidden; }
+
+.modal-panel {
+  background: var(--dark-walnut);
+  width: 100%;
+  max-width: 560px;
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  position: relative;
+  animation: modal-in 0.22s ease;
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-close {
+  position: absolute;
+  top: 1.125rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.4);
+  font-size: 1.375rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color var(--transition);
+  padding: 0.25rem;
+}
+
+.modal-close:hover { color: var(--white); }
+
+.modal-heading {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--white);
+  margin-bottom: 0;
+}
+
+.modal-panel .section-eyebrow { margin-bottom: 0.625rem; color: var(--brass); }
+
+/* Boost form field contrast inside the dark modal panel */
+.modal-panel .form-field label { color: rgba(255,255,255,0.70); }
+.modal-panel .form-field input,
+.modal-panel .form-field textarea {
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.28);
+}
+.modal-panel .form-field input::placeholder,
+.modal-panel .form-field textarea::placeholder { color: rgba(255,255,255,0.38); }
+
+/* ==========================================================================
    Footer
    ========================================================================== */
 
@@ -598,6 +668,8 @@ h1, h2, h3, h4 {
   max-width: var(--max-width);
   margin: 0 auto;
 }
+
+.gallery-hero-cta { margin-top: 1.75rem; }
 
 .gallery-hero-eyebrow {
   font-size: 0.675rem;
@@ -710,9 +782,6 @@ h1, h2, h3, h4 {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
 
   .about-body { grid-template-columns: 1fr; gap: 2.5rem; }
-
-  .contact-grid { grid-template-columns: 1fr 1fr; }
-  .contact-form-col { grid-column: 1 / -1; }
 }
 
 @media (max-width: 640px) {
@@ -722,7 +791,6 @@ h1, h2, h3, h4 {
   .services-grid { grid-template-columns: 1fr; }
 
   .contact-grid { grid-template-columns: 1fr; }
-  .contact-form-col { grid-column: auto; }
 
   .form-row { grid-template-columns: 1fr; }
 

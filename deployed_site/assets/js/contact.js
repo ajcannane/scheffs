@@ -38,6 +38,7 @@
             messageEl.textContent = data.message;
             form.reset();
             if (window.grecaptcha) window.grecaptcha.reset();
+            document.dispatchEvent(new CustomEvent('contact:sent'));
           } else {
             throw new Error(data.message);
           }

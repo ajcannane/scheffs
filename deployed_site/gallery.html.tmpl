@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gallery — Scheff's Kitchens &amp; Cabinets</title>
   <meta name="description" content="Browse photos of custom kitchens, vanities, benchtops, wardrobes, and cabinetry handcrafted by Scheff's Kitchens &amp; Cabinets in Adelaide.">
-  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/main.css?v=3">
   <link rel="stylesheet" href="assets/js/dist/photoswipe.css">
   <link rel="stylesheet" href="assets/js/dist/default-skin/default-skin.css">
 </head>
@@ -21,7 +21,7 @@
     <ul class="nav-links" role="list">
       <li><a href="index.html">Home</a></li>
       <li><a href="gallery.html">Gallery</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#" data-modal="contact-modal" class="nav-enquiry-link">Contact</a></li>
     </ul>
     <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -33,7 +33,7 @@
 <div class="mobile-menu" aria-hidden="true">
   <a href="index.html">Home</a>
   <a href="gallery.html">Gallery</a>
-  <a href="#contact">Contact</a>
+  <a href="#" data-modal="contact-modal">Contact</a>
 </div>
 
 <!-- Gallery hero -->
@@ -41,6 +41,7 @@
   <div class="gallery-hero-content">
     <p class="gallery-hero-eyebrow">Handcrafted in Adelaide</p>
     <h1 class="gallery-hero-title">Our work</h1>
+    <button class="btn btn-outline gallery-hero-cta" data-modal="contact-modal">Make an enquiry</button>
   </div>
 </div>
 
@@ -699,6 +700,7 @@
           <a href="https://www.facebook.com/scheffskitchens/" aria-label="Facebook">fb</a>
           <a href="https://www.instagram.com/scheffskitchens/" aria-label="Instagram">ig</a>
         </div>
+        <button class="btn btn-primary contact-enquiry-btn" data-modal="contact-modal">Make an enquiry</button>
       </div>
 
       <!-- Map -->
@@ -709,45 +711,6 @@
           referrerpolicy="strict-origin-when-cross-origin"
           loading="lazy"
           title="Scheff's Kitchens location map"></iframe>
-      </div>
-
-      <!-- Form -->
-      <div class="contact-form-col">
-        <form id="contact-form" method="post" action="contact.php" novalidate>
-          <div class="form-message" role="alert"></div>
-          <div class="contact-form">
-            <div class="form-row">
-              <div class="form-field">
-                <label for="form_name">First name *</label>
-                <input type="text" id="form_name" name="name" placeholder="First name" required autocomplete="given-name">
-              </div>
-              <div class="form-field">
-                <label for="form_lastname">Last name *</label>
-                <input type="text" id="form_lastname" name="surname" placeholder="Last name" required autocomplete="family-name">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-field">
-                <label for="form_email">Email *</label>
-                <input type="email" id="form_email" name="email" placeholder="you@example.com" required autocomplete="email">
-              </div>
-              <div class="form-field">
-                <label for="form_phone">Phone</label>
-                <input type="tel" id="form_phone" name="phone" placeholder="Optional" autocomplete="tel">
-              </div>
-            </div>
-            <div class="form-field">
-              <label for="form_message">Message *</label>
-              <textarea id="form_message" name="message" placeholder="Tell us about your project…" required></textarea>
-            </div>
-            <div class="form-recaptcha">
-              <div class="g-recaptcha" data-sitekey="${RECAPTCHA_SITE_KEY}" data-theme="dark"></div>
-            </div>
-            <div class="form-submit">
-              <input type="submit" class="btn btn-primary" value="Send message">
-            </div>
-          </div>
-        </form>
       </div>
 
     </div>
@@ -791,8 +754,54 @@
   </div>
 </div>
 
-<script src="assets/js/main.js"></script>
-<script src="assets/js/contact.js"></script>
+<!-- Contact modal -->
+<div class="modal-overlay" id="contact-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-panel">
+    <button class="modal-close" aria-label="Close enquiry form">&times;</button>
+    <p class="section-eyebrow">Get in touch</p>
+    <div class="scribe" style="margin-bottom:1.5rem">
+      <h2 class="modal-heading" id="modal-title">Make an enquiry</h2>
+    </div>
+    <form id="contact-form" method="post" action="contact.php" novalidate>
+      <div class="form-message" role="alert"></div>
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="form_name">First name *</label>
+            <input type="text" id="form_name" name="name" placeholder="First name" required autocomplete="given-name">
+          </div>
+          <div class="form-field">
+            <label for="form_lastname">Last name *</label>
+            <input type="text" id="form_lastname" name="surname" placeholder="Last name" required autocomplete="family-name">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="form_email">Email *</label>
+            <input type="email" id="form_email" name="email" placeholder="you@example.com" required autocomplete="email">
+          </div>
+          <div class="form-field">
+            <label for="form_phone">Phone</label>
+            <input type="tel" id="form_phone" name="phone" placeholder="Optional" autocomplete="tel">
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="form_message">Message *</label>
+          <textarea id="form_message" name="message" placeholder="Tell us about your project…" required></textarea>
+        </div>
+        <div class="form-recaptcha">
+          <div class="g-recaptcha" data-sitekey="${RECAPTCHA_SITE_KEY}" data-theme="dark"></div>
+        </div>
+        <div class="form-submit">
+          <input type="submit" class="btn btn-primary" value="Send message">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="assets/js/main.js?v=3"></script>
+<script src="assets/js/contact.js?v=3"></script>
 <script src="assets/js/dist/photoswipe.min.js"></script>
 <script src="assets/js/dist/photoswipe-ui-default.min.js"></script>
 <script src="assets/js/ps.js"></script>

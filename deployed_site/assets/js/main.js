@@ -34,6 +34,51 @@
     });
   }
 
+  // Contact modal
+  var modalOverlay = document.getElementById('contact-modal');
+  var modalCloseBtn = modalOverlay && modalOverlay.querySelector('.modal-close');
+
+  function openModal() {
+    if (!modalOverlay) return;
+    modalOverlay.classList.add('open');
+    modalOverlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    var firstInput = modalOverlay.querySelector('input, textarea');
+    if (firstInput) setTimeout(function () { firstInput.focus(); }, 50);
+  }
+
+  function closeModal() {
+    if (!modalOverlay) return;
+    modalOverlay.classList.remove('open');
+    modalOverlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+  }
+
+  document.querySelectorAll('[data-modal="contact-modal"]').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      openModal();
+    });
+  });
+
+  if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+
+  if (modalOverlay) {
+    modalOverlay.addEventListener('click', function (e) {
+      if (e.target === modalOverlay) closeModal();
+    });
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modalOverlay && modalOverlay.classList.contains('open')) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener('contact:sent', function () {
+    setTimeout(closeModal, 1800);
+  });
+
   // Gallery category nav — highlight active section on scroll
   var catLinks = document.querySelectorAll('.gallery-cat-nav a');
   if (catLinks.length && 'IntersectionObserver' in window) {
