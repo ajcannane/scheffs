@@ -1488,6 +1488,10 @@ body {
 body {
 	background: #ffffff;
 	overflow-x: hidden;
+	/* Reserve the scrollbar's width permanently so toggling body.modal-open's
+	   overflow (which removes the scrollbar) doesn't change the page's
+	   available width and shift fixed/centered content sideways. */
+	scrollbar-gutter: stable;
 }
 
 body.is-loading *,
