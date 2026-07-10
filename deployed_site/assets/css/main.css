@@ -3101,8 +3101,8 @@ body {
 	background-repeat: no-repeat;
 	background-size: contain;
 	max-width: 65em;
-	width: calc(100% - 0.75em);
-	margin: 0;
+	width: calc(100% - 6em);
+	margin: 0 auto;
 	max-height: inherit;
 	position: relative;
 }
@@ -3114,7 +3114,7 @@ body {
 		background: url("../../images/logo_300x80.gif");
 		background-repeat: no-repeat;
 		background-size: contain;
-		margin: 0;
+		margin: 0 auto;
 	}
 }
 
@@ -3123,7 +3123,7 @@ body {
 		background: url("../../images/logo_329x80.gif");
 		background-repeat: no-repeat;
 		background-size: contain;
-		margin: 0;
+		margin: 0 auto;
 	}
 }
 
