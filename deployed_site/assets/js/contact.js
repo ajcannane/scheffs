@@ -24,9 +24,11 @@ $(function () {
                     var messageAlert = 'alert-' + data.type;
                     var messageText = data.message;
 
-                    var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-hidden="true">&times;</a>' + messageText + '</div>';
+                    var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable" tabindex="-1"><a href="#" class="close" data-dismiss="alert" aria-hidden="true">&times;</a>' + messageText + '</div>';
                     if (messageAlert && messageText) {
-                        $('#contact-form').find('.messages').html(alertBox);
+                        var $alert = $('#contact-form').find('.messages').html(alertBox).find('.alert');
+                        $alert[0].scrollIntoView({ block: 'start', behavior: 'smooth' });
+                        $alert.focus();
                     }
                 }
             });

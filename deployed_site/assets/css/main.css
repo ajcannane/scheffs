@@ -4216,6 +4216,11 @@ body.modal-open {
 	font-size: 0.9em;
 }
 
+.alert:focus {
+	outline: 0;
+	box-shadow: 0 0 0 1px #e5474b;
+}
+
 .alert-success {
 	background-color: #eaf7ec;
 	color: #2d7a3e;
