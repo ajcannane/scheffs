@@ -1,5 +1,20 @@
 $(function () {
 
+    // The off-canvas #navPanel (see main.js) stops all clicks inside it from
+    // bubbling (util.js panel plugin), which stops Bootstrap's document-level
+    // [data-toggle="modal"] handler from ever seeing the click. Bind directly
+    // on #navPanel instead so it isn't blocked by that same stopPropagation.
+    $('#navPanel').on('click', 'a[data-toggle="modal"]', function (e) {
+        e.preventDefault();
+
+        var target = $(this).attr('data-target');
+
+        $('#navPanel').removeClass('visible');
+        window.setTimeout(function () {
+            $(target).modal('show');
+        }, 500);
+    });
+
     $('#contact-form').validator();
 
     $('#contact-form').on('submit', function (e) {
