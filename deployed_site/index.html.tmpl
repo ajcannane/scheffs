@@ -26,7 +26,7 @@
 			<nav id="nav">
 				<a href="index.html">Home</a>
 				<a href="gallery.html">Gallery</a>
-				<a href="#contact">Contact Us</a>
+				<a href="#" data-toggle="modal" data-target="#contactModal">Contact Us</a>
 			</nav>
 		</div>
 	</header>
@@ -68,7 +68,7 @@
 				by appointment only.</p>
 			<ul class="actions">
 				<li>
-					<a href="#contact" class="button alt">Contact Us</a>
+					<a href="#" class="button alt" data-toggle="modal" data-target="#contactModal">Contact Us</a>
 				</li>
 				<li>
 					<a href="gallery.html" class="button alt">Gallery</a>
@@ -76,7 +76,7 @@
 			</ul>
 			<p>We have
 				<b>
-					<a href="#contact">MOVED</a>
+					<a href="#" data-toggle="modal" data-target="#contactModal">MOVED</a>
 				</b> to our new workshop at: 4/18 Circuit Drive, Hendon SA 5014</p>
 			<div class="box alt">
 				<div class="row 50% uniform">
@@ -252,63 +252,92 @@
 	<!-- Footer -->
 	<section id="footer">
 		<div class="inner">
-			<header>
-				<h2>Get in Touch</h2>
-			</header>
-			<form id="contact-form" method="post" action="contact.php" role="form">
-				<div class="messages"></div>
-
-				<div class="controls">
-					<div class="field">
-						<div class="field half first form-group">
-							<label for="form_name">Firstname *</label>
-							<input id="form_name" type="text" name="name" class="form-control" placeholder="Please enter your firstname *" required="required"
-							    data-error="Firstname is required.">
-							<div class="help-block with-errors"></div>
-						</div>
-						<div class="field half form-group">
-							<label for="form_lastname">Lastname *</label>
-							<input id="form_lastname" type="text" name="surname" class="form-control" placeholder="Please enter your lastname *" required="required"
-							    data-error="Lastname is required.">
-							<div class="help-block with-errors"></div>
-						</div>
-					</div>
-					<div class="field half first form-group">
-						<label for="form_email">Email *</label>
-						<input id="form_email" type="email" name="email" class="form-control" placeholder="Please enter your email *" required="required"
-						    data-error="Valid email is required.">
-						<div class="help-block with-errors"></div>
-					</div>
-					<div class="field half form-group">
-						<label for="form_phone">Phone</label>
-						<input id="form_phone" type="tel" name="phone" class="form-control" placeholder="Please enter your phone">
-						<div class="help-block with-errors"></div>
-					</div>
-					<div class="field form-group">
-						<label for="form_message">Message *</label>
-						<textarea id="form_message" name="message" class="form-control" placeholder="Message for me *" rows="5" required="required"
-						    data-error="Please,leave us a message."></textarea>
-						<div class="help-block with-errors"></div>
-					</div>
-
-					<div class="field form-group">
-						<div class="g-recaptcha" data-sitekey="${RECAPTCHA_SITE_KEY}"></div>
-					</div>
-
-					<div class="field actions">
-						<input type="submit" class="alt" value="Send message">
-					</div>
-				</div>
-				<div class="field">
-					<p class="text-muted">
-						<strong>*</strong> These fields are required.</p>
-				</div>
-			</form>
 			<div class="copyright">
 				&copy; Scheff&apos;s Kitchens &amp; Cabinets - 2026
 			</div>
 		</div>
 	</section>
+
+	<!-- Contact modal -->
+	<div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<a href="#" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+					<h2 class="modal-title" id="contactModalLabel">Get in Touch</h2>
+				</div>
+				<div class="modal-body">
+					<form id="contact-form" method="post" action="contact.php" role="form">
+						<div class="messages"></div>
+
+						<div class="controls">
+							<div class="field">
+								<div class="field half first form-group">
+									<label for="form_name">Firstname *</label>
+									<input id="form_name" type="text" name="name" class="form-control" placeholder="Please enter your firstname *" required="required"
+									    data-error="Firstname is required.">
+									<div class="help-block with-errors"></div>
+								</div>
+								<div class="field half form-group">
+									<label for="form_lastname">Lastname *</label>
+									<input id="form_lastname" type="text" name="surname" class="form-control" placeholder="Please enter your lastname *" required="required"
+									    data-error="Lastname is required.">
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							<div class="field half first form-group">
+								<label for="form_email">Email *</label>
+								<input id="form_email" type="email" name="email" class="form-control" placeholder="Please enter your email *" required="required"
+								    data-error="Valid email is required.">
+								<div class="help-block with-errors"></div>
+							</div>
+							<div class="field half form-group">
+								<label for="form_phone">Phone</label>
+								<input id="form_phone" type="tel" name="phone" class="form-control" placeholder="Please enter your phone">
+								<div class="help-block with-errors"></div>
+							</div>
+							<div class="field form-group">
+								<label for="form_message">Message *</label>
+								<textarea id="form_message" name="message" class="form-control" placeholder="Message for me *" rows="5" required="required"
+								    data-error="Please,leave us a message."></textarea>
+								<div class="help-block with-errors"></div>
+							</div>
+
+							<div class="field form-group">
+								<div class="g-recaptcha" data-sitekey="${RECAPTCHA_SITE_KEY}"></div>
+							</div>
+
+							<div class="field actions">
+								<input type="submit" class="alt" value="Send message">
+							</div>
+						</div>
+						<div class="field">
+							<p class="text-muted">
+								<strong>*</strong> These fields are required.</p>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Success modal -->
+	<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<a href="#" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+					<h2 class="modal-title" id="successModalLabel">Thank you</h2>
+				</div>
+				<div class="modal-body">
+					<p>Contact form successfully submitted. Thank you, I will get back to you soon!</p>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="alt" value="Close" data-dismiss="modal">
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Scripts -->
 	<script src="assets/js/jquery.min.js"></script>
