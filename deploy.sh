@@ -20,7 +20,7 @@ GODADDY_PATH="public_html"
 envsubst '${GOOGLE_MAPS_API_KEY} ${RECAPTCHA_SITE_KEY}' \
   < deployed_site/index.html.tmpl > deployed_site/index.html
 
-envsubst '${GOOGLE_MAPS_API_KEY}' \
+envsubst '${GOOGLE_MAPS_API_KEY} ${RECAPTCHA_SITE_KEY}' \
   < deployed_site/gallery.html.tmpl > deployed_site/gallery.html
 
 # SCP everything except templates, .env, and local-only files

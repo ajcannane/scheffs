@@ -1490,6 +1490,18 @@ body {
 	overflow-x: hidden;
 }
 
+@media screen and (min-width: 981px) {
+	body {
+		/* Reserve the scrollbar's width permanently so toggling body.modal-open's
+		   overflow (which removes the scrollbar) doesn't change the page's
+		   available width and shift fixed/centered content sideways. Scoped to
+		   desktop widths that actually render a space-consuming scrollbar —
+		   real phones use overlay scrollbars and don't need this, and reserving
+		   it unconditionally shifted the modal off-center on narrow viewports. */
+		scrollbar-gutter: stable;
+	}
+}
+
 body.is-loading *,
 body.is-loading *:before,
 body.is-loading *:after {
@@ -3097,8 +3109,8 @@ body {
 	background-repeat: no-repeat;
 	background-size: contain;
 	max-width: 65em;
-	width: calc(100% - 0.75em);
-	margin: 0;
+	width: calc(100% - 6em);
+	margin: 0 auto;
 	max-height: inherit;
 	position: relative;
 }
@@ -3110,7 +3122,7 @@ body {
 		background: url("../../images/logo_300x80.gif");
 		background-repeat: no-repeat;
 		background-size: contain;
-		margin: 0;
+		margin: 0 auto;
 	}
 }
 
@@ -3119,7 +3131,7 @@ body {
 		background: url("../../images/logo_329x80.gif");
 		background-repeat: no-repeat;
 		background-size: contain;
-		margin: 0;
+		margin: 0 auto;
 	}
 }
 
@@ -4069,3 +4081,191 @@ div.gal {
 			font-size: 24px;
 			line-height: inherit;
 		}
+
+
+/* Modal */
+
+body.modal-open {
+	overflow: hidden;
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10010;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	outline: 0;
+}
+
+.modal.fade {
+	opacity: 0;
+	-moz-transition: opacity 0.15s linear;
+	-webkit-transition: opacity 0.15s linear;
+	-ms-transition: opacity 0.15s linear;
+	transition: opacity 0.15s linear;
+}
+
+.modal.in {
+	opacity: 1;
+}
+
+.modal-open .modal {
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.modal-dialog {
+	position: relative;
+	width: 90%;
+	max-width: 34em;
+	margin: 5em auto;
+}
+
+.modal-content {
+	position: relative;
+	background-color: #ffffff;
+	border-radius: 4px;
+	box-shadow: 0 0.5em 2em 0 rgba(0, 0, 0, 0.3);
+	color: #4d4d4d;
+}
+
+.modal-header {
+	padding: 1.25em 1.5em;
+	border-bottom: solid 1px #e5e5e5;
+}
+
+.modal-header .close {
+	float: right;
+	margin-top: -0.15em;
+}
+
+.modal-title {
+	margin: 0;
+	color: #4d4d4d;
+	font-size: 1.35em;
+	font-weight: 700;
+}
+
+.modal-body {
+	padding: 1.5em;
+}
+
+.modal-body form {
+	margin: 0;
+}
+
+.modal-footer {
+	padding: 1em 1.5em;
+	border-top: solid 1px #e5e5e5;
+	text-align: right;
+}
+
+.modal .close {
+	display: inline-block;
+	float: right;
+	width: 1.5em;
+	height: 1.5em;
+	line-height: 1.4em;
+	text-align: center;
+	background: none;
+	border: 0;
+	padding: 0;
+	cursor: pointer;
+	color: #4d4d4d;
+	opacity: 0.5;
+	font-size: 1.5em;
+	font-weight: 300;
+	text-decoration: none;
+}
+
+.modal .close:hover {
+	opacity: 1;
+	color: #e5474b;
+	text-decoration: none;
+}
+
+.modal-backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10005;
+	width: 100%;
+	height: 100%;
+	background-color: #000000;
+}
+
+.modal-backdrop.fade {
+	opacity: 0;
+	-moz-transition: opacity 0.15s linear;
+	-webkit-transition: opacity 0.15s linear;
+	-ms-transition: opacity 0.15s linear;
+	transition: opacity 0.15s linear;
+}
+
+.modal-backdrop.in {
+	opacity: 0.6;
+}
+
+@media screen and (max-width: 480px) {
+	.modal-dialog {
+		width: 94%;
+		margin: 2em auto;
+	}
+
+	.modal-body {
+		padding: 1.25em;
+	}
+}
+
+
+/* Alert */
+
+.alert {
+	position: relative;
+	padding: 0.85em 2.25em 0.85em 1em;
+	margin: 0 0 1.5em 0;
+	border-radius: 4px;
+	font-size: 0.9em;
+}
+
+.alert:focus {
+	outline: 0;
+	box-shadow: 0 0 0 1px #e5474b;
+}
+
+.alert-success {
+	background-color: #eaf7ec;
+	color: #2d7a3e;
+	border: solid 1px #c3e6cb;
+}
+
+.alert-danger {
+	background-color: #fceced;
+	color: #b3282d;
+	border: solid 1px #f5c2c4;
+}
+
+.alert .close {
+	display: inline-block;
+	position: absolute;
+	top: 0.6em;
+	right: 0.6em;
+	background: none;
+	border: 0;
+	padding: 0;
+	cursor: pointer;
+	color: inherit;
+	opacity: 0.6;
+	font-size: 1.1em;
+	line-height: 1;
+	text-decoration: none;
+}
+
+.alert .close:hover {
+	opacity: 1;
+	text-decoration: none;
+}
