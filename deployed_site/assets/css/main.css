@@ -622,6 +622,7 @@ body.modal-open { overflow: hidden; }
 }
 
 .modal-panel .section-eyebrow { margin-bottom: 0.625rem; color: var(--brass); }
+.modal-panel .scribe { margin-bottom: 1.5rem; }
 
 /* Boost form field contrast inside the dark modal panel */
 .modal-panel .form-field label { color: rgba(255,255,255,0.70); }
@@ -800,6 +801,15 @@ body.modal-open { overflow: hidden; }
   }
 
   .form-recaptcha { transform: scale(0.8); }
+}
+
+/* ==========================================================================
+   Focus styles
+   ========================================================================== */
+
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
 }
 
 /* ==========================================================================

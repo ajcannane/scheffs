@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gallery — Scheff's Kitchens &amp; Cabinets</title>
   <meta name="description" content="Browse photos of custom kitchens, vanities, benchtops, wardrobes, and cabinetry handcrafted by Scheff's Kitchens &amp; Cabinets in Adelaide.">
+  <link rel="icon" href="images/logo.png" type="image/png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Gallery — Scheff's Kitchens &amp; Cabinets">
+  <meta property="og:description" content="Browse photos of custom kitchens, vanities, benchtops, wardrobes, and cabinetry handcrafted in Adelaide since 1996.">
+  <meta property="og:image" content="images/Kitchen/45_960x720.jpg">
+  <meta property="og:url" content="https://www.scheffskitchens.com.au/gallery.html">
   <link rel="stylesheet" href="assets/css/main.css?v=3">
   <link rel="stylesheet" href="assets/js/dist/photoswipe.css">
   <link rel="stylesheet" href="assets/js/dist/default-skin/default-skin.css">
@@ -37,13 +43,13 @@
 </div>
 
 <!-- Gallery hero -->
-<div class="gallery-hero">
+<section class="gallery-hero" aria-label="Gallery hero">
   <div class="gallery-hero-content">
     <p class="gallery-hero-eyebrow">Handcrafted in Adelaide</p>
     <h1 class="gallery-hero-title">Our work</h1>
     <button class="btn btn-outline gallery-hero-cta" data-modal="contact-modal">Make an enquiry</button>
   </div>
-</div>
+</section>
 
 <!-- Category nav -->
 <nav class="gallery-cat-nav" aria-label="Gallery categories">
@@ -643,21 +649,21 @@
 
       <figure>
         <a href="./images/Workshop/Vehicle_960x720.jpg" data-size="960x720">
-          <img src="./images/Workshop/Vehicle_320x240.jpg" alt="Scheff's vehicle">
+          <img src="./images/Workshop/Vehicle_320x240.jpg" alt="Scheff's vehicle" loading="lazy">
         </a>
         <figcaption>Workshop</figcaption>
       </figure>
 
       <figure>
         <a href="./images/Workshop/workshop_770x434.jpg" data-size="770x434">
-          <img src="./images/Workshop/workshop_320x180.jpg" alt="Inside the workshop">
+          <img src="./images/Workshop/workshop_320x180.jpg" alt="Inside the workshop" loading="lazy">
         </a>
         <figcaption>Workshop</figcaption>
       </figure>
 
       <figure>
         <a href="./images/Workshop/workshop2_757x426.jpg" data-size="757x426">
-          <img src="./images/Workshop/workshop2_320x180.jpg" alt="Inside the workshop">
+          <img src="./images/Workshop/workshop2_320x180.jpg" alt="Inside the workshop" loading="lazy">
         </a>
         <figcaption>Workshop</figcaption>
       </figure>
@@ -759,7 +765,7 @@
   <div class="modal-panel">
     <button class="modal-close" aria-label="Close enquiry form">&times;</button>
     <p class="section-eyebrow">Get in touch</p>
-    <div class="scribe" style="margin-bottom:1.5rem">
+    <div class="scribe">
       <h2 class="modal-heading" id="modal-title">Make an enquiry</h2>
     </div>
     <form id="contact-form" method="post" action="contact.php" novalidate>
@@ -802,9 +808,9 @@
 
 <script src="assets/js/main.js?v=3"></script>
 <script src="assets/js/contact.js?v=3"></script>
-<script src="assets/js/dist/photoswipe.min.js"></script>
-<script src="assets/js/dist/photoswipe-ui-default.min.js"></script>
-<script src="assets/js/ps.js"></script>
+<script src="assets/js/dist/photoswipe.min.js?v=3"></script>
+<script src="assets/js/dist/photoswipe-ui-default.min.js?v=3"></script>
+<script src="assets/js/ps.js?v=3"></script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 </body>
