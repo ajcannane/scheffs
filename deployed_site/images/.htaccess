@@ -1,0 +1,5 @@
+Options -Indexes
+<Files "gallery-manifest.json">
+    Order allow,deny
+    Deny from all
+</Files>
