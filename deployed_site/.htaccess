@@ -1,0 +1,26 @@
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "DENY"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Block .tmpl source files from web access
+<FilesMatch "\.tmpl$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Block manifest generator — run via docker exec then delete from server
+<Files "generate-manifest.php">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Block PHP vendor library from web access
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^recaptcha-master/ - [F,L]
+</IfModule>
+
+# Suppress PHP errors in responses
+php_flag display_errors off

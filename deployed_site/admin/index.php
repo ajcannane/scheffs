@@ -1,5 +1,25 @@
 <?php
+// ── Session hardening ─────────────────────────────────────────────────────────
+const SESSION_TIMEOUT = 4 * 3600; // seconds of inactivity before logout
+
+session_set_cookie_params([
+    'lifetime' => 0,          // expire when browser closes
+    'path'     => '/admin/',
+    'secure'   => true,       // HTTPS only
+    'httponly' => true,       // no JS access
+    'samesite' => 'Lax',
+]);
 session_start();
+
+// Expire idle sessions
+if (!empty($_SESSION['admin_auth'])) {
+    if (time() - ($_SESSION['last_active'] ?? 0) > SESSION_TIMEOUT) {
+        session_destroy();
+        header('Location: ' . $_SERVER['PHP_SELF'] . '?expired=1');
+        exit;
+    }
+    $_SESSION['last_active'] = time();
+}
 
 // ── Config ───────────────────────────────────────────────────────────────────
 const VALID_CATEGORIES = [
@@ -61,7 +81,9 @@ function readManifest(): array {
 }
 
 function writeManifest(array $data): void {
-    file_put_contents(MANIFEST, json_encode($data, JSON_PRETTY_PRINT));
+    $tmp = MANIFEST . '.tmp';
+    file_put_contents($tmp, json_encode($data, JSON_PRETTY_PRINT), LOCK_EX);
+    rename($tmp, MANIFEST);
 }
 
 function nextId(): string {
@@ -100,6 +122,27 @@ function saveWebp(GdImage $img, string $path): void {
     }
 }
 
+// ── Brute-force protection ────────────────────────────────────────────────────
+// Lock files live in /tmp (always writable by the web server; not web-accessible)
+function lockFile(string $ip): string {
+    return sys_get_temp_dir() . '/scheffs_lk_' . hash('sha256', $ip) . '.json';
+}
+
+function getLock(string $ip): array {
+    $f = lockFile($ip);
+    if (!file_exists($f)) return ['attempts' => 0, 'until' => 0];
+    return json_decode(file_get_contents($f), true) ?: ['attempts' => 0, 'until' => 0];
+}
+
+function saveLock(string $ip, array $data): void {
+    file_put_contents(lockFile($ip), json_encode($data), LOCK_EX);
+}
+
+function clearLock(string $ip): void {
+    $f = lockFile($ip);
+    if (file_exists($f)) @unlink($f);
+}
+
 // ── Auth ──────────────────────────────────────────────────────────────────────
 $error = '';
 
@@ -107,15 +150,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $action = $_POST['action'];
 
     if ($action === 'login') {
-        $pw = $_POST['password'] ?? '';
-        $expected = adminPassword();
-        if ($expected !== '' && hash_equals($expected, $pw)) {
-            session_regenerate_id(true);
-            $_SESSION['admin_auth'] = true;
-            header('Location: ' . $_SERVER['PHP_SELF']);
-            exit;
+        $ip   = $_SERVER['REMOTE_ADDR'] ?? '';
+        $lock = getLock($ip);
+
+        if ($lock['until'] > time()) {
+            $mins  = (int) ceil(($lock['until'] - time()) / 60);
+            $error = "Too many failed attempts. Try again in {$mins} minute(s).";
+        } else {
+            sleep(1); // constant-time baseline — ~1 attempt/second regardless of password
+            $pw       = $_POST['password'] ?? '';
+            $expected = adminPassword();
+            if ($expected !== '' && password_verify($pw, $expected)) {
+                clearLock($ip);
+                session_regenerate_id(true);
+                $_SESSION['admin_auth']  = true;
+                $_SESSION['last_active'] = time();
+                header('Location: ' . $_SERVER['PHP_SELF']);
+                exit;
+            }
+            $attempts = $lock['attempts'] + 1;
+            $until    = $attempts >= 5 ? time() + 900 : 0; // 15-minute lockout after 5 failures
+            saveLock($ip, ['attempts' => $attempts, 'until' => $until]);
+            $error = $until > 0
+                ? 'Too many failed attempts. Locked for 15 minutes.'
+                : 'Incorrect password.';
         }
-        $error = 'Incorrect password.';
     }
 
     if ($action === 'logout' && isLoggedIn()) {
@@ -218,10 +277,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     }
 }
 
-if (!isLoggedIn() && empty($error)) {
-    // show login
-}
-
 $activeTab  = $_GET['tab'] ?? 'kitchens';
 if (!array_key_exists($activeTab, VALID_CATEGORIES)) $activeTab = 'kitchens';
 $manifest   = isLoggedIn() ? readManifest() : [];
@@ -294,7 +349,9 @@ $csrf       = isLoggedIn() ? csrfToken() : '';
 <div class="login-wrap">
   <div class="login-box">
     <h1>Gallery Admin</h1>
-    <?php if ($error): ?>
+    <?php if (!empty($_GET['expired'])): ?>
+    <div class="alert alert-error">Session expired. Please sign in again.</div>
+    <?php elseif ($error): ?>
     <div class="alert alert-error"><?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
     <form method="post">
