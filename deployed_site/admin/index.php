@@ -378,6 +378,8 @@ $csrf       = isLoggedIn() ? csrfToken() : '';
     .btn:hover { background: #d0a070; }
     .btn-danger { background: #a03030; }
     .btn-danger:hover { background: #c03030; }
+    .btn-hero { background: #2a6a4a; }
+    .btn-hero:hover { background: #3a8a5a; }
     .btn-sm { padding: .35rem .8rem; font-size: .8rem; }
     .alert { padding: .7rem 1rem; border-radius: 5px; margin-bottom: 1.2rem; font-size: .9rem; }
     .alert-error { background: #4a1c1c; border: 1px solid #a03030; color: #f0a0a0; }
@@ -405,17 +407,10 @@ $csrf       = isLoggedIn() ? csrfToken() : '';
     .img-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
     .img-card { background: #252525; border: 1px solid #333; border-radius: 6px; overflow: hidden; }
     .img-card img { width: 100%; height: 135px; object-fit: cover; display: block; }
-    .img-card-footer { padding: .5rem .6rem; display: flex; align-items: center; justify-content: space-between; }
+    .img-card-footer { padding: .5rem .6rem; display: flex; align-items: center; justify-content: space-between; gap: .4rem; }
     .img-card-id { font-size: .75rem; color: #888; }
     .empty { color: #666; font-style: italic; padding: 1rem 0; }
 
-    /* Gallery picker for hero selection */
-    .gallery-picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); gap: 3px; max-height: 260px; overflow-y: auto; background: #1a1a1a; border-radius: 6px; padding: 3px; margin: .75rem 0; }
-    .picker-item { position: relative; cursor: pointer; }
-    .picker-item input[type=radio] { position: absolute; opacity: 0; width: 0; height: 0; }
-    .picker-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 3px; border: 2px solid transparent; display: block; transition: border-color .15s; }
-    .picker-item:hover img { border-color: #666; }
-    .picker-item input[type=radio]:checked + img { border-color: #4ab080; }
 
     @media (max-width: 600px) {
       .upload-row { flex-direction: column; }
@@ -488,24 +483,6 @@ $csrf       = isLoggedIn() ? csrfToken() : '';
       </div>
     </form>
 
-    <p style="font-size:.85rem;color:#888;margin:1.25rem 0 .5rem">Or choose from gallery</p>
-    <form method="post">
-      <input type="hidden" name="action" value="set_hero_from_gallery">
-      <input type="hidden" name="csrf" value="<?= $csrf ?>">
-      <div class="gallery-picker">
-        <?php foreach (array_keys(VALID_CATEGORIES) as $gSlug):
-          $gFolder = VALID_CATEGORIES[$gSlug];
-          foreach ($manifest[$gSlug] as $e):
-            $thumbSrc = '../images/' . $gFolder . '/' . $e['id'] . '_' . $e['tw'] . 'x' . $e['th'] . '.jpg';
-        ?>
-        <label class="picker-item">
-          <input type="radio" name="gallery_pick" value="<?= htmlspecialchars($gSlug . ':' . $e['id']) ?>">
-          <img src="<?= htmlspecialchars($thumbSrc) ?>" loading="lazy" alt="">
-        </label>
-        <?php endforeach; endforeach; ?>
-      </div>
-      <button type="submit" class="btn" style="margin-top:.5rem">Use selected image</button>
-    </form>
   </div>
 
   <!-- Gallery photos -->
@@ -557,13 +534,21 @@ $csrf       = isLoggedIn() ? csrfToken() : '';
       <img src="<?= htmlspecialchars($thumbPath) ?>" alt="Image #<?= $img['id'] ?>" loading="lazy">
       <div class="img-card-footer">
         <span class="img-card-id">#<?= $img['id'] ?> &nbsp; <?= $img['fw'] ?>&times;<?= $img['fh'] ?></span>
-        <form method="post" onsubmit="return confirm('Delete image #<?= $img['id'] ?>?')">
-          <input type="hidden" name="action" value="delete">
-          <input type="hidden" name="csrf" value="<?= $csrf ?>">
-          <input type="hidden" name="category" value="<?= $activeTab ?>">
-          <input type="hidden" name="id" value="<?= $img['id'] ?>">
-          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-        </form>
+        <div style="display:flex;gap:.4rem">
+          <form method="post">
+            <input type="hidden" name="action" value="set_hero_from_gallery">
+            <input type="hidden" name="csrf" value="<?= $csrf ?>">
+            <input type="hidden" name="gallery_pick" value="<?= htmlspecialchars($activeTab . ':' . $img['id']) ?>">
+            <button type="submit" class="btn btn-hero btn-sm">Hero</button>
+          </form>
+          <form method="post" onsubmit="return confirm('Delete image #<?= $img['id'] ?>?')">
+            <input type="hidden" name="action" value="delete">
+            <input type="hidden" name="csrf" value="<?= $csrf ?>">
+            <input type="hidden" name="category" value="<?= $activeTab ?>">
+            <input type="hidden" name="id" value="<?= $img['id'] ?>">
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+          </form>
+        </div>
       </div>
     </div>
     <?php endforeach; ?>
