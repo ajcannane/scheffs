@@ -287,6 +287,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         exit;
     }
 
+    if (isLoggedIn() && $action === 'set_hero_from_gallery') {
+        verifyCsrf();
+        $pick = $_POST['gallery_pick'] ?? '';
+        [$gSlug, $gId] = array_pad(explode(':', $pick, 2), 2, '');
+        if (!array_key_exists($gSlug, VALID_CATEGORIES)) {
+            $error = 'Invalid selection.';
+        } else {
+            $manifest = readManifest();
+            $entry = null;
+            foreach ($manifest[$gSlug] as $e) {
+                if ((string)$e['id'] === $gId) { $entry = $e; break; }
+            }
+            if (!$entry) {
+                $error = 'Image not found in gallery.';
+            } else {
+                $fullPath = IMAGE_BASE . '/' . VALID_CATEGORIES[$gSlug] . '/' . $gId . '_' . $entry['fw'] . 'x' . $entry['fh'] . '.jpg';
+                if (!file_exists($fullPath)) {
+                    $error = 'Image file missing on disk.';
+                } else {
+                    $src = imagecreatefromjpeg($fullPath);
+                    if (!$src) {
+                        $error = 'Could not read image.';
+                    } else {
+                        [$out, ,] = scaleImage($src, imagesx($src), imagesy($src), HERO_MAX);
+                        saveJpeg($out, HERO_IMAGE);
+                        if ($out !== $src) imagedestroy($out);
+                        imagedestroy($src);
+                        $successMsg = 'Hero image updated. Hard-refresh the homepage to see it (Ctrl+Shift+R / Cmd+Shift+R).';
+                    }
+                }
+            }
+        }
+    }
+
     if (isLoggedIn() && $action === 'upload_hero') {
         verifyCsrf();
 
@@ -375,6 +409,14 @@ $csrf       = isLoggedIn() ? csrfToken() : '';
     .img-card-id { font-size: .75rem; color: #888; }
     .empty { color: #666; font-style: italic; padding: 1rem 0; }
 
+    /* Gallery picker for hero selection */
+    .gallery-picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); gap: 3px; max-height: 260px; overflow-y: auto; background: #1a1a1a; border-radius: 6px; padding: 3px; margin: .75rem 0; }
+    .picker-item { position: relative; cursor: pointer; }
+    .picker-item input[type=radio] { position: absolute; opacity: 0; width: 0; height: 0; }
+    .picker-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 3px; border: 2px solid transparent; display: block; transition: border-color .15s; }
+    .picker-item:hover img { border-color: #666; }
+    .picker-item input[type=radio]:checked + img { border-color: #4ab080; }
+
     @media (max-width: 600px) {
       .upload-row { flex-direction: column; }
       .img-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
@@ -439,11 +481,30 @@ $csrf       = isLoggedIn() ? csrfToken() : '';
       <input type="hidden" name="csrf" value="<?= $csrf ?>">
       <div class="upload-row">
         <div class="field">
-          <label for="hero_photo">Replace hero (JPEG or PNG, max 20 MB)</label>
+          <label for="hero_photo">Upload new image (JPEG or PNG, max 20 MB)</label>
           <input type="file" id="hero_photo" name="hero_photo" accept="image/jpeg,image/png" required>
         </div>
         <div><button type="submit" class="btn">Upload</button></div>
       </div>
+    </form>
+
+    <p style="font-size:.85rem;color:#888;margin:1.25rem 0 .5rem">Or choose from gallery</p>
+    <form method="post">
+      <input type="hidden" name="action" value="set_hero_from_gallery">
+      <input type="hidden" name="csrf" value="<?= $csrf ?>">
+      <div class="gallery-picker">
+        <?php foreach (array_keys(VALID_CATEGORIES) as $gSlug):
+          $gFolder = VALID_CATEGORIES[$gSlug];
+          foreach ($manifest[$gSlug] as $e):
+            $thumbSrc = '../images/' . $gFolder . '/' . $e['id'] . '_' . $e['tw'] . 'x' . $e['th'] . '.jpg';
+        ?>
+        <label class="picker-item">
+          <input type="radio" name="gallery_pick" value="<?= htmlspecialchars($gSlug . ':' . $e['id']) ?>">
+          <img src="<?= htmlspecialchars($thumbSrc) ?>" loading="lazy" alt="">
+        </label>
+        <?php endforeach; endforeach; ?>
+      </div>
+      <button type="submit" class="btn" style="margin-top:.5rem">Use selected image</button>
     </form>
   </div>
 
