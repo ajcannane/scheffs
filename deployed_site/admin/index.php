@@ -53,8 +53,10 @@ const CAT_LABELS = [
 ];
 const THUMB_MAX  = 320;   // px
 const FULL_MAX   = 960;   // px
+const HERO_MAX   = 1920;  // px
 const MANIFEST   = __DIR__ . '/../images/gallery-manifest.json';
 const IMAGE_BASE = __DIR__ . '/../images';
+const HERO_IMAGE = IMAGE_BASE . '/hero.jpg';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function adminPassword(): string {
@@ -284,6 +286,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         header('Location: ' . $_SERVER['PHP_SELF'] . '?tab=' . urlencode($slug));
         exit;
     }
+
+    if (isLoggedIn() && $action === 'upload_hero') {
+        verifyCsrf();
+
+        if (empty($_FILES['hero_photo']['tmp_name'])) {
+            $error = 'No file uploaded.';
+        } else {
+            $tmp  = $_FILES['hero_photo']['tmp_name'];
+            $fi   = finfo_open(FILEINFO_MIME_TYPE);
+            $mime = finfo_file($fi, $tmp);
+            finfo_close($fi);
+
+            if (!in_array($mime, ['image/jpeg', 'image/png'], true)) {
+                $error = 'Only JPEG or PNG files are accepted.';
+            } else {
+                $src = $mime === 'image/png' ? imagecreatefrompng($tmp) : imagecreatefromjpeg($tmp);
+                if (!$src) {
+                    $error = 'Could not read image file.';
+                } else {
+                    [$out, ,] = scaleImage($src, imagesx($src), imagesy($src), HERO_MAX);
+                    saveJpeg($out, HERO_IMAGE);
+                    if ($out !== $src) imagedestroy($out);
+                    imagedestroy($src);
+                    $successMsg = 'Hero image updated. Hard-refresh the homepage to see it (Ctrl+Shift+R / Cmd+Shift+R).';
+                }
+            }
+        }
+    }
 }
 
 $activeTab  = $_GET['tab'] ?? 'kitchens';
@@ -393,7 +423,31 @@ $csrf       = isLoggedIn() ? csrfToken() : '';
   <div class="alert alert-success"><?= htmlspecialchars($successMsg) ?></div>
   <?php endif; ?>
 
-  <!-- Upload -->
+  <!-- Hero image -->
+  <div class="upload-panel">
+    <h2>Hero image</h2>
+    <?php if (file_exists(HERO_IMAGE)): ?>
+    <img src="../images/hero.jpg?v=<?= filemtime(HERO_IMAGE) ?>"
+         alt="Current hero image"
+         style="width:100%;max-height:180px;object-fit:cover;border-radius:4px;margin-bottom:.5rem;display:block">
+    <p style="font-size:.8rem;color:#888;margin-bottom:1rem">Last updated: <?= date('j M Y, g:ia', filemtime(HERO_IMAGE)) ?></p>
+    <?php else: ?>
+    <p style="font-size:.8rem;color:#666;font-style:italic;margin-bottom:1rem">No hero image set.</p>
+    <?php endif; ?>
+    <form method="post" enctype="multipart/form-data">
+      <input type="hidden" name="action" value="upload_hero">
+      <input type="hidden" name="csrf" value="<?= $csrf ?>">
+      <div class="upload-row">
+        <div class="field">
+          <label for="hero_photo">Replace hero (JPEG or PNG, max 20 MB)</label>
+          <input type="file" id="hero_photo" name="hero_photo" accept="image/jpeg,image/png" required>
+        </div>
+        <div><button type="submit" class="btn">Upload</button></div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Gallery photos -->
   <div class="upload-panel">
     <h2>Add photo</h2>
     <form method="post" enctype="multipart/form-data">
