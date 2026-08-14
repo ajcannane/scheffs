@@ -17,15 +17,16 @@ try
 {
     if (!empty($_POST)) {
 
-        // CSRF: verify request originates from this site
-        $allowedOrigin = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
-        $requestOrigin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
+        // CSRF: require a valid Origin or Referer from this site.
+        // Rejecting-if-wrong leaves a bypass when both headers are absent;
+        // requiring-at-least-one closes that gap.
+        $allowedOrigin  = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
+        $requestOrigin  = isset($_SERVER['HTTP_ORIGIN'])  ? $_SERVER['HTTP_ORIGIN']  : '';
         $requestReferer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
-        if ($requestOrigin && $requestOrigin !== $allowedOrigin) {
+        $hasValidOrigin  = $requestOrigin  && $requestOrigin === $allowedOrigin;
+        $hasValidReferer = $requestReferer && strpos($requestReferer, $allowedOrigin) === 0;
+        if (!$hasValidOrigin && !$hasValidReferer) {
             throw new \Exception('Invalid request origin.');
-        }
-        if (!$requestOrigin && $requestReferer && strpos($requestReferer, $allowedOrigin) !== 0) {
-            throw new \Exception('Invalid request referer.');
         }
 
         // validate the ReCaptcha, if something is wrong, we throw an Exception,

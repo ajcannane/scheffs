@@ -9,6 +9,15 @@ session_set_cookie_params([
     'httponly' => true,       // no JS access
     'samesite' => 'Lax',
 ]);
+
+// Store sessions in a private directory so they aren't co-mingled with other
+// tenants' sessions in /tmp (relevant on GoDaddy shared hosting).
+// Falls back to the PHP default if the directory isn't writable (Docker dev).
+$_sdir = __DIR__ . '/data';
+if (!is_dir($_sdir)) @mkdir($_sdir, 0700, true);
+if (is_writable($_sdir)) session_save_path($_sdir);
+unset($_sdir);
+
 session_start();
 
 // Expire idle sessions
