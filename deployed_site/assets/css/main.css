@@ -191,7 +191,7 @@ h1, h2, h3, h4 {
   position: relative;
   height: 100vh;
   min-height: 600px;
-  background: url('../images/hero.jpg') center 40% / cover no-repeat;
+  background: url('/images/hero.jpg') center 40% / cover no-repeat;
   display: flex;
   align-items: flex-end;
   padding-bottom: clamp(3rem, 8vh, 6rem);
