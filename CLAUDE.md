@@ -4,123 +4,51 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Scheff's Kitchens & Cabinets — a PHP/Apache website served via Docker. The live site files live in `deployed_site/`, and the container is configured in `docker/`.
+Scheff's Kitchens & Cabinets — a PHP/Apache website served via Docker. Site files live in `deployed_site/`, container config in `docker/`.
 
 ## Development Environment
 
-Copy `.env.example` to `.env` and fill in the values, then:
-
 ```bash
-docker-compose up        # Start web server (port 8084) + mailhog (port 8025)
+docker-compose up          # Start web server (port 8084) + mailhog (port 8025)
 docker-compose up --build  # Rebuild after Dockerfile changes
+docker-compose up -d       # Pick up .env changes (restart does NOT re-read .env)
 ```
 
-- Site: http://localhost:8084
-- Mailhog (captured emails): http://localhost:8025
-
-**Note:** `ADMIN_PASSWORD` in `.env` must be a bcrypt hash. Generate one with:
+**`ADMIN_PASSWORD` gotcha:** must be a bcrypt hash with `$` doubled in `.env` (e.g. `$2y$` → `$$2y$$`) because docker-compose interpolates bare `$`. Generate:
 ```bash
 docker exec redesign-website-web-1 php -r "echo password_hash('yourpassword', PASSWORD_DEFAULT);"
 ```
-Dollar signs in the hash must be doubled in `.env` (e.g. `$2y$` → `$$2y$$`) because docker-compose interpolates bare `$` as variable references. Use `docker-compose up -d` (not `restart`) to pick up `.env` changes.
+
+**Hero image gotcha:** CSS at `assets/css/main.css` references `/images/hero.jpg` as an absolute path — a relative `../images/` would resolve to `assets/images/` (wrong). Don't change it to relative.
 
 ## Architecture
 
-**`deployed_site/`** — all website content served by Apache.
+**`deployed_site/`** — Apache document root (bind-mounted into container):
+- `index.html.tmpl` — homepage; `entrypoint.sh` runs `envsubst` → `index.html` (gitignored)
+- `gallery.php` — dynamic gallery; reads `images/gallery-manifest.json`, uses `getenv()` for API keys
+- `contact-us.php` — standalone contact page with map, contact info, and enquiry modal
+- `contact.php` — AJAX form POST handler (not a user-facing page)
+- `admin/index.php` — password-protected gallery + hero image management panel
+- `assets/css/main.css`, `assets/js/` — frontend assets
+- `images/` — gallery images, manifest, and hero.jpg
 
-- `index.html.tmpl` — homepage template with `${VAR}` placeholders; `entrypoint.sh` runs `envsubst` at container startup to produce `index.html` (gitignored)
-- `gallery.php` — dynamic PHP gallery; reads the manifest and uses `getenv()` for API keys
-- `contact-us.php` — standalone contact page with address, map, and "Make an enquiry" button that opens the modal form
-- `contact.php` — AJAX form handler (POST only; not a user-facing page)
+**`docker/`**:
+- `entrypoint.sh` — envsubst on template + `chmod -R o+w images/` (dev bind-mount workaround; not needed on GoDaddy where suPHP runs PHP as the file owner)
+- `Dockerfile` — PHP/Apache + GD (WebP/JPEG) + msmtp + gettext-base
+- `php.ini` — routes `mail()` → msmtp → mailhog in dev
 
-**`docker/`** — container configuration:
-- `Dockerfile` — PHP/Apache base, installs `msmtp`, `gettext-base`, and PHP GD with WebP/JPEG support
-- `entrypoint.sh` — runs `envsubst` on `index.html.tmpl`, then `chmod -R o+w images/` so Apache (www-data) can write to the host-owned bind-mount in dev. On GoDaddy, suPHP runs PHP as the file owner so no chmod is needed in production.
-- `php.ini` — routes `mail()` calls through msmtp → mailhog in dev
-
-## Pages
-
-**Homepage** (`index.html.tmpl` → `index.html`):
-- Hero section with CSS background image at `/images/hero.jpg` (absolute path — the CSS lives at `assets/css/main.css` so relative `../images/` would resolve wrongly)
-- About, Services sections
-- Nav "Contact" and all CTAs link to `contact-us.php`
-
-**Gallery** (`gallery.php`):
-- Dynamic PHP gallery reading `images/gallery-manifest.json`
-- PhotoSwipe v4 lightbox with `<picture>` elements (WebP + JPEG fallback)
-- Category anchor nav (e.g. `gallery.php#kitchens`)
-- No contact section — "Make an enquiry" links to `contact-us.php`
-
-**Contact** (`contact-us.php`):
-- Standalone page: Grant's photo, address, phone, email, social links, Google Maps embed
-- Single "Make an enquiry" button opens the enquiry modal
-- Modal and reCAPTCHA script load only on this page (not on homepage or gallery)
-
-## Gallery admin (`deployed_site/admin/index.php`)
-
-Password-protected panel at `/admin/`.
-
-**Login:** bcrypt `password_verify()` against `ADMIN_PASSWORD` env var. Brute-force protection: 5 failures → 15-minute IP lockout using JSON lock files in `sys_get_temp_dir()`.
-
-**Hero image management:**
-- Upload a new JPEG/PNG (scaled to max 1920px wide, saved as JPEG) — overwrites `images/hero.jpg` in place so the CSS reference stays correct
-- Or pick any existing gallery image from the scrollable thumbnail grid
-
-**Gallery photo management:**
-- Upload: JPEG/PNG accepted, auto-resized to 320w thumb + 960w full + WebP thumb via PHP GD; manifest updated
-- Delete: removes all files for that image ID and updates the manifest
-
-**Security:**
-- Session hardening: `secure`, `httponly`, `samesite=Lax` cookie flags; private session save path in `admin/data/` (falls back to PHP default if not writable — happens in Docker dev)
-- Session idle timeout: 4 hours
-- CSRF token (48 hex chars) on all POST actions
-- Atomic manifest writes: write to `.tmp` then `rename()`
-
-## Gallery manifest (`deployed_site/images/gallery-manifest.json`)
-
-JSON mapping category slugs to image entries `{id, tw, th, fw, fh, webp}`. Protected from HTTP access via `deployed_site/images/.htaccess`. Updated automatically by the admin panel on upload/delete.
-
-Initial manifest was generated by `generate-manifest.php` (CLI-only, one-time use — blocked from HTTP by `.htaccess`).
-
-## Contact form (`deployed_site/contact.php`)
-
-- ReCAPTCHA v2 validation (bypass in dev: set `RECAPTCHA_BYPASS=true` in `.env`)
-- CSRF protection: requires a valid `Origin` or `Referer` header matching the site's own origin
-- Email sent via `mail()` → msmtp → mailhog in dev
-
-## Security headers
-
-`deployed_site/.htaccess` sets site-wide headers: `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`. Also blocks `.tmpl` files, `generate-manifest.php`, and the `recaptcha-master/` vendor directory from HTTP access.
-
-## Environment variables
+## Environment Variables
 
 Set in `.env`, injected via `docker-compose.yml`:
 
 | Variable | Used by |
 |---|---|
-| `GOOGLE_MAPS_API_KEY` | `contact-us.php`, `gallery.php`, `index.html.tmpl` |
-| `RECAPTCHA_SITE_KEY` | `contact-us.php` (modal), `contact.php` |
-| `RECAPTCHA_SECRET_KEY` | `contact.php` (server-side validation) |
+| `GOOGLE_MAPS_API_KEY` | `index.html.tmpl`, `gallery.php`, `contact-us.php` |
+| `RECAPTCHA_SITE_KEY` / `RECAPTCHA_SECRET_KEY` | `contact-us.php` (modal), `contact.php` |
 | `ENQUIRY_EMAIL` | `contact.php` (recipient) |
-| `ADMIN_PASSWORD` | `admin/index.php` (bcrypt hash, `$$`-escaped in `.env`) |
+| `ADMIN_PASSWORD` | `admin/index.php` (bcrypt hash, `$$`-escaped) |
+| `RECAPTCHA_BYPASS` | Set `true` in dev to skip reCAPTCHA validation |
 
 ## Deployment
 
-Deploy to GoDaddy hosting via SCP.
-
-**Setup (one-time):**
-1. Add an SSH alias to `~/.ssh/config`:
-   ```
-   Host godaddy_scheff
-       HostName ssh.example.com
-       User your_godaddy_username
-       IdentityFile ~/.ssh/your_key
-   ```
-2. Update `GODADDY_ALIAS` and `GODADDY_PATH` in both `deploy.sh` and `deploy-images.sh`
-3. Ensure `.env` is populated with all required variables
-
-**`deploy.sh`** — full site deployment: runs `envsubst` on `index.html.tmpl`, then SCPs assets, PHP, and generated HTML to the remote server.
-
-**`deploy-images.sh`** — image-only deployment: SCPs only the `images/` folder. Faster when only gallery images changed.
-
-**Note on `ADMIN_PASSWORD` in production:** on GoDaddy, set the env var directly in the hosting control panel or via `.htaccess` `SetEnv`. The bcrypt hash does not need `$$`-escaping outside of docker-compose `.env` files.
+Run `/deploy` for the full deployment workflow and SSH setup instructions.
