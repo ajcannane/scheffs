@@ -407,7 +407,7 @@ $csrf       = isLoggedIn() ? csrfToken() : '';
     .img-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
     .img-card { background: #252525; border: 1px solid #333; border-radius: 6px; overflow: hidden; }
     .img-card img { width: 100%; height: 135px; object-fit: cover; display: block; }
-    .img-card-footer { padding: .5rem .6rem; display: flex; align-items: center; justify-content: space-between; gap: .4rem; }
+    .img-card-footer { padding: .5rem .6rem; display: flex; align-items: center; flex-wrap: wrap; gap: .4rem; }
     .img-card-id { font-size: .75rem; color: #888; }
     .empty { color: #666; font-style: italic; padding: 1rem 0; }
 
@@ -533,8 +533,7 @@ $csrf       = isLoggedIn() ? csrfToken() : '';
     <div class="img-card">
       <img src="<?= htmlspecialchars($thumbPath) ?>" alt="Image #<?= $img['id'] ?>" loading="lazy">
       <div class="img-card-footer">
-        <span class="img-card-id">#<?= $img['id'] ?> &nbsp; <?= $img['fw'] ?>&times;<?= $img['fh'] ?></span>
-        <div style="display:flex;gap:.4rem">
+        <div style="display:flex;gap:.4rem;flex-shrink:0">
           <form method="post">
             <input type="hidden" name="action" value="set_hero_from_gallery">
             <input type="hidden" name="csrf" value="<?= $csrf ?>">
@@ -549,6 +548,7 @@ $csrf       = isLoggedIn() ? csrfToken() : '';
             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
           </form>
         </div>
+        <span class="img-card-id">#<?= $img['id'] ?> &nbsp; <?= $img['fw'] ?>&times;<?= $img['fh'] ?></span>
       </div>
     </div>
     <?php endforeach; ?>

@@ -18,26 +18,23 @@
   window.addEventListener('scroll', updateNav, { passive: true });
 
   // Mobile hamburger
+  function closeMenu() {
+    toggle.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+
   if (toggle && mobileMenu) {
     toggle.addEventListener('click', function () {
       var open = toggle.classList.toggle('open');
       mobileMenu.classList.toggle('open', open);
       mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      document.body.style.overflow = open ? 'hidden' : '';
     });
 
     mobileMenu.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        toggle.classList.remove('open');
-        mobileMenu.classList.remove('open');
-        mobileMenu.setAttribute('aria-hidden', 'true');
-        toggle.setAttribute('aria-expanded', 'false');
-        // Only release scroll lock if the modal is not also open
-        if (!document.body.classList.contains('modal-open')) {
-          document.body.style.overflow = '';
-        }
-      });
+      link.addEventListener('click', closeMenu);
     });
   }
 
@@ -77,8 +74,9 @@
   }
 
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && modalOverlay && modalOverlay.classList.contains('open')) {
-      closeModal();
+    if (e.key === 'Escape') {
+      if (modalOverlay && modalOverlay.classList.contains('open')) closeModal();
+      if (mobileMenu && mobileMenu.classList.contains('open')) closeMenu();
     }
   });
 
