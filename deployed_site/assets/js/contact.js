@@ -11,7 +11,6 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      // Clear previous message
       messageEl.className = 'form-message';
       messageEl.textContent = '';
 
@@ -23,25 +22,18 @@
       submitBtn.disabled = true;
       submitBtn.value = 'Sending…';
 
-      fetch('contact.php', {
+      fetch(form.action, {
         method: 'POST',
-        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-        body: new FormData(form),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(form)).toString(),
       })
         .then(function (res) {
           if (!res.ok) throw new Error('Network error');
-          return res.json();
-        })
-        .then(function (data) {
-          if (data.type === 'success') {
-            messageEl.className = 'form-message success';
-            messageEl.textContent = data.message;
-            form.reset();
-            if (window.grecaptcha) window.grecaptcha.reset();
-            document.dispatchEvent(new CustomEvent('contact:sent'));
-          } else {
-            throw new Error(data.message);
-          }
+          messageEl.className = 'form-message success';
+          messageEl.textContent = 'Thank you — we\'ll be in touch shortly!';
+          form.reset();
+          if (window.grecaptcha) window.grecaptcha.reset();
+          document.dispatchEvent(new CustomEvent('contact:sent'));
         })
         .catch(function (err) {
           messageEl.className = 'form-message error';
