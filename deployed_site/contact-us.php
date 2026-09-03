@@ -54,7 +54,7 @@ $recaptchaKey = getenv('RECAPTCHA_SITE_KEY') ?: '';
 </section>
 
 <!-- Contact -->
-<section class="section section--dark" id="contact">
+<section class="section" id="contact">
   <div class="section-inner">
     <div class="contact-grid">
 
@@ -80,10 +80,13 @@ $recaptchaKey = getenv('RECAPTCHA_SITE_KEY') ?: '';
           <a href="tel:+61418991079">0418 991 079</a>
         </div>
         <div class="contact-social">
-          <a href="https://www.facebook.com/scheffskitchens/" aria-label="Facebook">fb</a>
-          <a href="https://www.instagram.com/scheffskitchens/" aria-label="Instagram">ig</a>
+          <a href="https://www.facebook.com/scheffskitchens/" aria-label="Facebook" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/scheffskitchens/" aria-label="Instagram" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
         </div>
-        <button class="btn btn-primary contact-enquiry-btn" data-modal="contact-modal">Make an enquiry</button>
       </div>
 
       <!-- Map -->

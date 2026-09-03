@@ -71,7 +71,6 @@ foreach (array_keys(CATEGORIES) as $slug) {
   <div class="gallery-hero-content">
     <p class="gallery-hero-eyebrow">Handcrafted in Adelaide</p>
     <h1 class="gallery-hero-title">Our work</h1>
-    <a href="contact-us.php" class="btn btn-outline gallery-hero-cta">Make an enquiry</a>
   </div>
 </section>
 

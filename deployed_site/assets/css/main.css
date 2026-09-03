@@ -9,6 +9,7 @@
   --dark-oak:    #141210;
   --raw-timber:  #F6F3EE;
   --brass:       #C09060;
+  --red:         #e5474b;
   --dark-walnut: #3A2D20;
   --sanded:      #EDEAE3;
   --text:        #2A2520;
@@ -94,7 +95,7 @@ h1, h2, h3, h4 {
 }
 
 .site-nav.scrolled {
-  background: var(--dark-oak);
+  background: var(--red);
   box-shadow: 0 1px 0 rgba(255,255,255,0.06);
 }
 
@@ -121,7 +122,7 @@ h1, h2, h3, h4 {
   font-size: 0.575rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--brass);
+  color: rgba(255,255,255,0.75);
 }
 
 .nav-links { display: flex; gap: 2.5rem; }
@@ -130,7 +131,7 @@ h1, h2, h3, h4 {
   font-size: 0.8rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255,255,255,0.92);
   transition: color var(--transition);
 }
 
@@ -164,7 +165,7 @@ h1, h2, h3, h4 {
   position: fixed;
   inset: 0;
   top: var(--nav-height);
-  background: var(--dark-oak);
+  background: var(--red);
   z-index: 99;
   flex-direction: column;
   align-items: center;
@@ -270,21 +271,21 @@ h1, h2, h3, h4 {
 }
 
 .btn-primary {
-  background: var(--brass);
-  color: var(--dark-oak);
-  border-color: var(--brass);
+  background: var(--red);
+  color: var(--white);
+  border-color: var(--red);
   font-weight: 500;
 }
 
-.btn-primary:hover { background: #d4a670; border-color: #d4a670; }
+.btn-primary:hover { background: #e23135; border-color: #e23135; }
 
 .btn-outline {
   background: transparent;
   color: var(--white);
-  border-color: rgba(255,255,255,0.45);
+  border-color: rgba(255,255,255,0.6);
 }
 
-.btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.07); }
+.btn-outline:hover { background: var(--red); border-color: var(--red); color: var(--white); }
 
 .btn-ghost {
   background: transparent;
@@ -293,7 +294,7 @@ h1, h2, h3, h4 {
   font-size: 0.725rem;
 }
 
-.btn-ghost:hover { background: var(--dark-oak); color: var(--white); border-color: var(--dark-oak); }
+.btn-ghost:hover { background: var(--red); color: var(--white); border-color: var(--red); }
 
 /* ==========================================================================
    Section structure
@@ -414,6 +415,8 @@ h1, h2, h3, h4 {
    Contact section (dark)
    ========================================================================== */
 
+#contact { padding-top: 1rem; }
+
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -422,7 +425,6 @@ h1, h2, h3, h4 {
   align-items: start;
 }
 
-.contact-enquiry-btn { margin-top: 2rem; width: 100%; }
 
 .contact-info-photo {
   width: 76px;
@@ -436,14 +438,14 @@ h1, h2, h3, h4 {
 .contact-info-name {
   font-family: var(--font-display);
   font-size: 1.125rem;
-  color: var(--white);
+  color: var(--text);
   margin-bottom: 1rem;
 }
 
 .contact-info address {
   font-style: normal;
   font-size: 0.875rem;
-  color: rgba(255,255,255,0.55);
+  color: var(--text-muted);
   line-height: 1.9;
   margin-bottom: 1.25rem;
 }
@@ -452,19 +454,19 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   gap: 0.625rem;
-  color: rgba(255,255,255,0.55);
+  color: var(--text-muted);
   font-size: 0.875rem;
   margin-top: 0.5rem;
 }
 
 .contact-info-item a {
-  color: rgba(255,255,255,0.55);
+  color: var(--text-muted);
   transition: color var(--transition);
 }
 
-.contact-info-item a:hover { color: var(--brass); }
+.contact-info-item a:hover { color: var(--red); }
 
-.contact-icon { width: 15px; height: 15px; flex-shrink: 0; fill: var(--brass); }
+.contact-icon { width: 15px; height: 15px; flex-shrink: 0; fill: var(--red); }
 
 .contact-social { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
 
@@ -474,14 +476,14 @@ h1, h2, h3, h4 {
   justify-content: center;
   width: 34px;
   height: 34px;
-  border: 1px solid rgba(255,255,255,0.18);
-  color: rgba(255,255,255,0.55);
+  border: 1px solid rgba(42,37,32,0.2);
+  color: var(--text-muted);
   font-size: 0.65rem;
   letter-spacing: 0.05em;
   transition: border-color var(--transition), color var(--transition);
 }
 
-.contact-social a:hover { border-color: var(--brass); color: var(--brass); }
+.contact-social a:hover { border-color: var(--red); color: var(--red); }
 
 .contact-map { height: 100%; min-height: 300px; }
 
@@ -490,7 +492,7 @@ h1, h2, h3, h4 {
   height: 100%;
   min-height: 300px;
   border: 0;
-  filter: grayscale(50%) brightness(0.82) contrast(1.05);
+  filter: grayscale(30%) contrast(1.02);
 }
 
 /* ==========================================================================
@@ -585,7 +587,7 @@ h1, h2, h3, h4 {
 body.modal-open { overflow: hidden; }
 
 .modal-panel {
-  background: var(--dark-walnut);
+  background: #b02828;
   width: 100%;
   max-width: 560px;
   padding: clamp(1.75rem, 4vw, 2.75rem);
@@ -629,11 +631,14 @@ body.modal-open { overflow: hidden; }
 .modal-panel .form-field label { color: rgba(255,255,255,0.70); }
 .modal-panel .form-field input,
 .modal-panel .form-field textarea {
-  background: rgba(255,255,255,0.10);
-  border-color: rgba(255,255,255,0.28);
+  background: rgba(255,255,255,0.92);
+  border-color: rgba(255,255,255,0.6);
+  color: var(--text);
 }
 .modal-panel .form-field input::placeholder,
-.modal-panel .form-field textarea::placeholder { color: rgba(255,255,255,0.38); }
+.modal-panel .form-field textarea::placeholder { color: rgba(42,37,32,0.45); }
+.modal-panel .form-field input:focus,
+.modal-panel .form-field textarea:focus { border-color: var(--white); background: var(--white); }
 
 /* ==========================================================================
    Footer
@@ -657,27 +662,51 @@ body.modal-open { overflow: hidden; }
 
 .gallery-hero {
   position: relative;
-  height: 42vh;
-  min-height: 300px;
-  background: var(--dark-oak);
+  height: 30vh;
+  min-height: 240px;
+  background: url('/images/hero.jpg') center 40% / cover no-repeat var(--dark-oak);
   display: flex;
   align-items: flex-end;
   padding: var(--nav-height) var(--pad-x) clamp(2rem, 5vh, 3.5rem);
 }
 
+.gallery-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(14,12,10,0.85) 0%,
+    rgba(14,12,10,0.45) 60%,
+    rgba(14,12,10,0.25) 100%
+  );
+}
+
 .gallery-hero-content {
+  position: relative;
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
 }
 
-.gallery-hero-cta { margin-top: 1.75rem; }
+.gallery-hero-cta {
+  margin-top: 1.75rem;
+  color: var(--white);
+  border-color: rgba(255,255,255,0.7);
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+.gallery-hero-cta:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+}
 
 .gallery-hero-eyebrow {
   font-size: 0.675rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--brass);
+  color: rgba(255,255,255,0.80);
   margin-bottom: 0.75rem;
 }
 
@@ -697,7 +726,7 @@ body.modal-open { overflow: hidden; }
   position: sticky;
   top: var(--nav-height);
   z-index: 50;
-  background: var(--dark-oak);
+  background: var(--red);
   border-bottom: 1px solid rgba(255,255,255,0.08);
   padding: 0 var(--pad-x);
   overflow-x: auto;
@@ -719,21 +748,25 @@ body.modal-open { overflow: hidden; }
   font-size: 0.725rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.82);
   padding: 0.9rem 1.125rem;
   border-bottom: 2px solid transparent;
   transition: color var(--transition), border-color var(--transition);
 }
 
 .gallery-cat-nav a:hover,
-.gallery-cat-nav a.active { color: var(--white); border-bottom-color: var(--brass); }
+.gallery-cat-nav a.active { color: var(--white); border-bottom-color: var(--white); }
 
 /* ==========================================================================
    Gallery — photo sections
    ========================================================================== */
 
-.gallery-section { padding: var(--section-pad) var(--pad-x); }
+.gallery-section {
+  padding: var(--section-pad) var(--pad-x);
+  scroll-margin-top: calc(var(--nav-height) + 44px + 1.25rem);
+}
 
+.gallery-cat-nav + .gallery-section { padding-top: 0.5rem; }
 .gallery-section + .gallery-section { padding-top: 0; }
 
 .gallery-section-inner { max-width: var(--max-width); margin: 0 auto; }
