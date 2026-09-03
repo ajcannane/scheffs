@@ -78,12 +78,14 @@ foreach (array_keys(CATEGORIES) as $slug) {
 <nav class="gallery-cat-nav" aria-label="Gallery categories">
   <div class="gallery-cat-nav-inner">
     <?php foreach (CATEGORIES as $slug => $cat): ?>
+    <?php if (empty($manifest[$slug])) continue; ?>
     <a href="#<?= $slug ?>"><?= $cat['label'] ?></a>
     <?php endforeach; ?>
   </div>
 </nav>
 
 <?php foreach (CATEGORIES as $slug => $cat): ?>
+<?php if (empty($manifest[$slug])) continue; ?>
 <!-- <?= $cat['heading'] ?> -->
 <section class="gallery-section" id="<?= $slug ?>">
   <div class="gallery-section-inner">
