@@ -31,6 +31,7 @@
    ========================================================================== */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
 
 html { scroll-behavior: smooth; }
 
@@ -135,8 +136,12 @@ h1, h2, h3, h4 {
   transition: color var(--transition);
 }
 
-.nav-links a:hover,
-.nav-links a.nav-active { color: var(--brass); }
+.nav-links a:hover { color: var(--white); }
+.nav-links a.nav-active {
+  color: var(--white);
+  border-bottom: 1px solid rgba(255,255,255,0.6);
+  padding-bottom: 2px;
+}
 
 .nav-toggle {
   display: none;
