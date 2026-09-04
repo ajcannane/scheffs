@@ -12,11 +12,13 @@
   from = "/contact.php"
   to = "/contact-us.html"
   status = 301
+  force = true
 
 [[redirects]]
   from = "/gallery.php"
   to = "/gallery.html"
   status = 301
+  force = true
 
 [[headers]]
   for = "/*"
@@ -24,3 +26,6 @@
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    Permissions-Policy = "geolocation=(), camera=(), microphone=(), fullscreen=(self)"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://www.google.com https://www.gstatic.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.google.com; connect-src 'self';"
