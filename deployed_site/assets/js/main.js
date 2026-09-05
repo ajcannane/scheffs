@@ -44,7 +44,13 @@
 
   function openModal() {
     if (!modalOverlay) return;
-    // Reset any leftover message and form state from a previous submission
+    // Restore form view if success state was showing
+    var successEl = modalOverlay.querySelector('.modal-success');
+    if (successEl) successEl.hidden = true;
+    modalOverlay.querySelectorAll('.section-eyebrow, .scribe, #contact-form').forEach(function (el) {
+      el.hidden = false;
+    });
+    // Clear any leftover error message
     var msg = modalOverlay.querySelector('.form-message');
     if (msg) { msg.className = 'form-message'; msg.textContent = ''; }
     var form = modalOverlay.querySelector('form');
@@ -87,7 +93,7 @@
   });
 
   document.addEventListener('contact:sent', function () {
-    setTimeout(closeModal, 1800);
+    setTimeout(closeModal, 3500);
   });
 
   // Gallery category nav — highlight active section on scroll

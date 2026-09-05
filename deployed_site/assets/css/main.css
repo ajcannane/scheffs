@@ -651,6 +651,52 @@ body.modal-open { overflow: hidden; }
 .modal-panel .form-field input:focus,
 .modal-panel .form-field textarea:focus { border-color: var(--white); background: var(--white); }
 
+/* Modal success state */
+.modal-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 0 1rem;
+  animation: modal-in 0.3s ease;
+}
+
+.modal-success-icon {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1.5rem;
+}
+
+.modal-success-ring {
+  animation: draw-ring 0.5s ease forwards 0.1s;
+}
+
+.modal-success-tick {
+  animation: draw-tick 0.35s ease forwards 0.55s;
+}
+
+@keyframes draw-ring {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes draw-tick {
+  to { stroke-dashoffset: 0; }
+}
+
+.modal-success-heading {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+
+.modal-success-body {
+  color: rgba(255,255,255,0.80);
+  font-size: 1rem;
+}
+
 /* ==========================================================================
    Footer
    ========================================================================== */

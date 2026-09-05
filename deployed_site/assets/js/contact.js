@@ -5,8 +5,19 @@
     var form = document.getElementById('contact-form');
     if (!form) return;
 
-    var messageEl = form.querySelector('.form-message');
-    var submitBtn = form.querySelector('[type="submit"]');
+    var messageEl  = form.querySelector('.form-message');
+    var submitBtn  = form.querySelector('[type="submit"]');
+    var panel      = form.closest('.modal-panel');
+    var successEl  = panel && panel.querySelector('.modal-success');
+
+    function showSuccess() {
+      // Hide the modal header + form, reveal the success panel
+      panel.querySelectorAll('.section-eyebrow, .scribe, #contact-form').forEach(function (el) {
+        el.hidden = true;
+      });
+      successEl.hidden = false;
+      document.dispatchEvent(new CustomEvent('contact:sent'));
+    }
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -28,29 +39,20 @@
         body: new URLSearchParams(new FormData(form)).toString(),
       })
         .then(function (res) {
-          if (!res.ok) throw new Error('Network error');
-          messageEl.className = 'form-message success';
-          messageEl.textContent = 'Thank you — we\'ll be in touch shortly!';
+          if (!res.ok) throw new Error('Something went wrong. Please try again.');
           form.reset();
           if (window.grecaptcha) window.grecaptcha.reset();
-          document.dispatchEvent(new CustomEvent('contact:sent'));
-          // Fade the message out after 4 s so it doesn't linger
-          setTimeout(function () {
-            messageEl.style.transition = 'opacity 0.6s';
-            messageEl.style.opacity = '0';
-            setTimeout(function () {
-              messageEl.className = 'form-message';
-              messageEl.textContent = '';
-              messageEl.style.transition = '';
-              messageEl.style.opacity = '';
-            }, 600);
-          }, 4000);
+          if (successEl) {
+            showSuccess();
+          } else {
+            messageEl.className = 'form-message success';
+            messageEl.textContent = 'Thank you — we\'ll be in touch shortly!';
+            document.dispatchEvent(new CustomEvent('contact:sent'));
+          }
         })
         .catch(function (err) {
           messageEl.className = 'form-message error';
           messageEl.textContent = err.message || 'Something went wrong. Please try again.';
-        })
-        .finally(function () {
           submitBtn.disabled = false;
           submitBtn.value = 'Send message';
         });
