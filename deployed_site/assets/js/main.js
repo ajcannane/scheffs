@@ -44,10 +44,16 @@
 
   function openModal() {
     if (!modalOverlay) return;
+    // Reset any leftover message and form state from a previous submission
+    var msg = modalOverlay.querySelector('.form-message');
+    if (msg) { msg.className = 'form-message'; msg.textContent = ''; }
+    var form = modalOverlay.querySelector('form');
+    if (form) form.reset();
+    if (window.grecaptcha) window.grecaptcha.reset();
     modalOverlay.classList.add('open');
     modalOverlay.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
-    var firstInput = modalOverlay.querySelector('input, textarea');
+    var firstInput = modalOverlay.querySelector('input:not([type="hidden"]), textarea');
     if (firstInput) setTimeout(function () { firstInput.focus(); }, 50);
   }
 

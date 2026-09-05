@@ -34,6 +34,17 @@
           form.reset();
           if (window.grecaptcha) window.grecaptcha.reset();
           document.dispatchEvent(new CustomEvent('contact:sent'));
+          // Fade the message out after 4 s so it doesn't linger
+          setTimeout(function () {
+            messageEl.style.transition = 'opacity 0.6s';
+            messageEl.style.opacity = '0';
+            setTimeout(function () {
+              messageEl.className = 'form-message';
+              messageEl.textContent = '';
+              messageEl.style.transition = '';
+              messageEl.style.opacity = '';
+            }, 600);
+          }, 4000);
         })
         .catch(function (err) {
           messageEl.className = 'form-message error';
