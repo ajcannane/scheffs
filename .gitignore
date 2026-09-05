@@ -1,3 +1,5 @@
 .env
 deployed_site/index.html
 .netlify
+.claude/skills/
+skills-lock.json
