@@ -109,22 +109,8 @@ h1, h2, h3, h4 {
   justify-content: space-between;
 }
 
-.nav-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
-
-.nav-wordmark-name {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.3rem;
-  color: var(--white);
-  letter-spacing: -0.01em;
-}
-
-.nav-wordmark-sub {
-  font-size: 0.575rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.75);
-}
+.nav-wordmark { display: flex; align-items: center; }
+.nav-logo     { height: 38px; width: auto; }
 
 .nav-links { display: flex; gap: 2.5rem; }
 
